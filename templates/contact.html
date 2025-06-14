@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moving App Contact Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .moving-bg {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f8fafc" opacity="0.2"/><path d="M20,20 L80,20 L80,80 L20,80 Z" fill="none" stroke="%232965f1" stroke-width="1" stroke-opacity="0.1"/></svg>');
+            background-size: 40px 40px;
+        }
+        .form-container {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+        .moving-truck {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            animation: moveTruck 15s linear infinite;
+        }
+        @keyframes moveTruck {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        .input-focus:focus {
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <div class="w-full max-w-5xl mx-4 my-8">
+        <div class="form-container bg-white flex flex-col md:flex-row">
+            <!-- Information Section -->
+            <div class="w-full md:w-2/5 bg-blue-600 text-white p-10 relative moving-bg">
+                <div class="relative z-10">
+                    <h2 class="text-3xl font-bold mb-6">Request Your Moving Quote!</h2>
+                    <p class="mb-8 text-blue-100 leading-relaxed">
+                        Complete our contact form and our team will get back to you within 24 hours to plan your perfect move.
+                    </p>
+                    
+                    <div class="space-y-5">
+                        <div class="flex items-start">
+                            <div class="bg-blue-500 p-3 rounded-full mr-4">
+                                <i class="fas fa-truck-moving text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg">Professional Service</h3>
+                                <p class="text-blue-100">Experienced movers with attention to detail</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-blue-500 p-3 rounded-full mr-4">
+                                <i class="fas fa-shield-alt text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg">Fully Insured</h3>
+                                <p class="text-blue-100">Your belongings are protected during the move</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-blue-500 p-3 rounded-full mr-4">
+                                <i class="fas fa-clock text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-lg">Fast Response</h3>
+                                <p class="text-blue-100">Get a quote within hours, not days</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Moving truck animation -->
+                <div class="moving-truck">
+                    <i class="fas fa-truck-moving text-4xl text-blue-300"></i>
+                </div>
+            </div>
+            
+            <!-- Form Section -->
+            <div class="w-full md:w-3/5 p-8 md:p-12">
+                <div class="text-center mb-10">
+                    <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">Moving Service Request</h1>
+                    <p class="text-gray-600">Fill out the form and we'll contact you shortly</p>
+                    <div class="w-20 h-1 bg-blue-500 mx-auto mt-4 rounded-full"></div>
+                </div>
+                
+                <form class="space-y-6">
+                    <!-- Full Name -->
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-medium" for="name">
+                            Full Name
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-user text-gray-400"></i>
+                            </div>
+                            <input
+                                type="text"
+                                id="name"
+                                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg input-focus focus:outline-none focus:border-blue-500"
+                                placeholder="John Smith"
+                                required
+                            >
+                        </div>
+                    </div>
+                    
+                    <!-- Email -->
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-medium" for="email">
+                            Email Address
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-envelope text-gray-400"></i>
+                            </div>
+                            <input
+                                type="email"
+                                id="email"
+                                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg input-focus focus:outline-none focus:border-blue-500"
+                                placeholder="john@example.com"
+                                required
+                            >
+                        </div>
+                    </div>
+                    
+                    <!-- Estimated Date -->
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-medium" for="date">
+                            Estimated Moving Date
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-calendar-alt text-gray-400"></i>
+                            </div>
+                            <input
+                                type="date"
+                                id="date"
+                                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg input-focus focus:outline-none focus:border-blue-500"
+                                required
+                            >
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Details -->
+                    <div>
+                        <label class="block text-gray-700 mb-2 font-medium" for="details">
+                            Moving Details
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 pt-3 pointer-events-none">
+                                <i class="fas fa-edit text-gray-400"></i>
+                            </div>
+                            <textarea
+                                id="details"
+                                rows="4"
+                                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg input-focus focus:outline-none focus:border-blue-500"
+                                placeholder="Please provide details about your move (size of home, special items, etc.)"
+                            ></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <button
+                        type="submit"
+                        class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-4 rounded-lg transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl"
+                    >
+                        Send Request
+                        <i class="fas fa-paper-plane ml-2"></i>
+                    </button>
+                </form>
+                
+                <!-- Contact Info -->
+                <div class="mt-10 pt-6 border-t border-gray-200">
+                    <div class="flex flex-col md:flex-row justify-between text-center">
+                        <div class="mb-4 md:mb-0">
+                            <div class="font-medium text-gray-700 mb-1"><i class="fas fa-phone-alt mr-2 text-blue-500"></i> Contact Us</div>
+                            <div class="text-gray-600">+1 (800) MOVE-NOW</div>
+                        </div>
+                        <div>
+                            <div class="font-medium text-gray-700 mb-1"><i class="fas fa-envelope mr-2 text-blue-500"></i> Email</div>
+                            <div class="text-gray-600">info@movingapp.com</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="text-center mt-8 text-gray-600 text-sm">
+            <p>© 2023 MovingApp. All rights reserved. | Professional Moving Services</p>
+        </div>
+    </div>
+    
+    <script>
+        // Set min date to today for the date picker
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('date').setAttribute('min', today);
+            
+            // Form submission handler
+            const form = document.querySelector('form');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Show success message
+                const button = form.querySelector('button');
+                const originalText = button.innerHTML;
+                
+                button.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Request Sent!';
+                button.classList.remove('from-blue-600', 'to-blue-700', 'hover:from-blue-700', 'hover:to-blue-800');
+                button.classList.add('bg-green-500', 'hover:bg-green-600');
+                
+                // Reset after 3 seconds
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.add('from-blue-600', 'to-blue-700', 'hover:from-blue-700', 'hover:to-blue-800');
+                    button.classList.remove('bg-green-500', 'hover:bg-green-600');
+                    form.reset();
+                }, 3000);
+            });
+        });
+    </script>
+</body>
+</html>

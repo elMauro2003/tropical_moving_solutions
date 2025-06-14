@@ -1,84 +1,1041 @@
 {% load static %}
+<!-- <img src="{% static 'css/image.png' %}" alt=""> -->
 <!DOCTYPE html>
-<html lang="es">
+
+<html lang="es" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Landing Page - Mudanzas Tropicales</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+  <link rel="icon" href="static/logo.jpg">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+@import url('https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+</style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' }
+            },
+            bounce: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-15px)' }
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-15px)' }
+            }
+          },
+          animation: {
+            fadeIn: 'fadeIn 1.5s ease-in-out',
+            bounce: 'bounce 1.5s infinite',
+            float: 'float 3s ease-in-out infinite'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+ .funnel-sans{
+  font-family: "Funnel Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+}
+ .funnel-sans-light{
+  font-family: "Funnel Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+.nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+            padding-bottom: 4px;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #0d9488;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-link:hover {
+            color: #0d9488;
+        }
+        
+        .nav-link.active {
+            color: #0d9488;
+        }
+        
+        .nav-link.active::after {
+            width: 100%;
+            background-color: #0d9488;
+        }
+    /* Estilo para el degradado en KEYS y COAST */
+    .gradient-text {
+      background: linear-gradient(to bottom, currentColor 100%,transparent);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+    
+    /* Estilos del carrusel */
+    .carousel-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      background-size: cover;
+      background-position: center;
+      transition: opacity 1.5s ease-in-out;
+      z-index: 0;
+    }
+    
+    .carousel-item.active {
+      opacity: 1;
+      z-index: 1;
+    }
+    
+    /* Estilos para la flecha de scroll */
+    .scroll-down-arrow {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      cursor: pointer;
+      animation: bounce 1.5s infinite;
+    }
+    
+    .scroll-down-arrow i {
+      font-size: 3rem;
+      color: white;
+      opacity: 0.8;
+      transition: all 0.3s ease;
+    }
+    
+    .scroll-down-arrow:hover i {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+    
+    /* Sombra para mejorar legibilidad */
+    #card {
+      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    }
+    
+    /* Navbar */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 30;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(10px);
+    }
+      .testimonial-container {
+            perspective: 1000px;
+        }
+        
+        .testimonial-card {
+            transform-style: preserve-3d;
+            opacity: 0;
+            transform: translateX(100px) rotateY(10deg);
+            transition: all 0.8s ease-out;
+        }
+        
+        .testimonial-card.active {
+            opacity: 1;
+            transform: translateX(0) rotateY(0);
+        }
+        
+        .quote-icon {
+            position: absolute;
+            top: -20px;
+            left: -15px;
+            font-size: 120px;
+            opacity: 0.08;
+            z-index: 0;
+        }
+        .truck-animation {
+            animation: moveTruck 20s linear infinite;
+        }
+        
+        @keyframes moveTruck {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100vw); }
+        }
+        
+        .dot {
+            transition: all 0.3s ease;
+        }
+        
+        .dot.active {
+            width: 28px;
+            background-color: #2563eb;
+        }
+            .pricing-card {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .pricing-card:hover {
+            transform: scale(1.05);
+            border-color: #ff7700;
+            box-shadow: 0 20px 25px -5px rgba(255, 119, 0, 0.25), 0 10px 10px -5px rgba(255, 119, 0, 0.1);
+        }
+        
+        .popular-badge {
+            background: linear-gradient(135deg, #ff8c00, #ff5500);
+            color: white;
+            box-shadow: 0 4px 10px rgba(255, 140, 0, 0.4);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            letter-spacing: 0.5px;
+        }
+        
+        .feature-icon {
+            width: 22px;
+            height: 22px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: 10px;
+            font-size: 12px;
+        }
+        
+        .included {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+        
+        .not-included {
+            background-color: #fee2e2;
+            color: #b91c1c;
+        }
+        
+        .price-highlight {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .price-highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 107, 0, 0.25);
+            border-radius: 3px;
+            z-index: -1;
+        }
+  </style>
 </head>
-<body class="bg-gradient-to-b from-blue-100 via-yellow-50 to-blue-200">
+<body>
 
   <!-- Navbar -->
-  <nav class="bg-white shadow-md">
-    <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-      <!-- Logo -->
-      <a href="#" class="flex items-center space-x-2">
-        <img src="{% static 'logo.jpg' %}" alt="Logo" class="h-10 w-10 rounded-md">
-        <span class="text-2xl font-bold text-teal-600">T.M.C</span>
-      </a>
+      <nav id="navbar" class="fixed top-0 left-0 right-0 bg-white shadow-md z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="" class="flex items-center space-x-2">
+                <div class="h-10 w-10 rounded-md bg-gradient-to-r from-moving-green to-moving-blue flex items-center justify-center">
+                    <span class="text-white font-bold">TMC</span>
+                    <img src="static/logo.jpg" alt="" class="rounded-xl bg-cover">
+                </div>
+            </a>
 
-      <!-- Menu -->
-      <ul class="hidden md:flex space-x-6 text-lg font-medium text-gray-700">
-        <li><a href="#inicio" class="hover:text-teal-500">Inicio</a></li>
-        <li><a href="#servicios" class="hover:text-teal-500">Servicios</a></li>
-        <li><a href="#sobre-nosotros" class="hover:text-teal-500">Sobre Nosotros</a></li>
-        <li><a href="#testimonios" class="hover:text-teal-500">Testimonios</a></li>
-        <li><a href="#contacto" class="hover:text-teal-500">Contacto</a></li>
-      </ul>
+            <!-- Menu Desktop -->
+            <ul class="hidden md:flex space-x-6 text-base font-medium text-gray-700">
+                <li><a href="#inicio" class="nav-link text-gray-600 font-medium pb-1 hover:text-teal-600 active">Home</a></li>
+                    <li><a href="#servicios" class="nav-link text-gray-600 font-medium pb-1 hover:text-teal-600">Services</a></li>
+                    <li><a href="#sobre-nosotros" class="nav-link text-gray-600 font-medium pb-1 hover:text-teal-600">About us</a></li>
+                    <li><a href="#testimonios" class="nav-link text-gray-600 font-medium pb-1 hover:text-teal-600">Testimonie</a></li>
+                    <li><a href="#contacto" class="nav-link text-gray-600 font-medium pb-1 hover:text-teal-600">Contact</a></li>
+            </ul>
 
-      <!-- Mobile Menu Button -->
-      <button id="menu-btn" class="md:hidden text-teal-600 focus:outline-none">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-        </svg>
-      </button>
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden text-teal-600 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+            <ul class="space-y-3 text-center py-4 text-base font-medium text-gray-700">
+                 <li>
+                        <a href="#inicio" class="nav-link active text-gray-600 font-medium pb-1">Home</a>
+                    </li>
+                    <li>
+                        <a href="#servicios" class="nav-link text-gray-600 font-medium pb-1">Services</a>
+                    </li>
+                    <li>
+                        <a href="#sobre-nosotros" class="nav-link text-gray-600 font-medium pb-1">About us</a>
+                    </li>
+                    <li>
+                        <a href="#testimonios" class="nav-link text-gray-600 font-medium pb-1">Testimonies</a>
+                    </li>
+                    <li>
+                        <a href="#contacto" class="nav-link text-gray-600 font-medium pb-1">Contact</a>
+                    </li>
+            </ul>
+        </div>
+    </nav>
+
+ <!-- Hero Section -->
+  <section class="relative h-screen w-full overflow-hidden">
+    <!-- Carrusel de Fondo -->
+    <div id="carousel" class="absolute inset-0 blur-[2px]">
+      <!-- Las imágenes se insertarán dinámicamente con JavaScript -->
     </div>
-
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
-      <ul class="space-y-4 text-center py-4 text-lg font-medium text-gray-700">
-        <li><a href="#inicio" class="block hover:text-teal-500">Inicio</a></li>
-        <li><a href="#servicios" class="block hover:text-teal-500">Servicios</a></li>
-        <li><a href="#sobre-nosotros" class="block hover:text-teal-500">Sobre Nosotros</a></li>
-        <li><a href="#testimonios" class="block hover:text-teal-500">Testimonios</a></li>
-        <li><a href="#contacto" class="block hover:text-teal-500">Contacto</a></li>
-      </ul>
-    </div>
-  </nav>
-
-  <!-- Hero Section -->
-<section id="hero" clas7<section id="hero" class="relative h-screen bg-cover bg-center" style="background-image: url('{% static "back.jpg" %}');">
-    <!-- Overlay -->
-    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
-  
-    <!-- Content -->
-    <div class="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4">
-      <!-- Circular Background -->
-      <div class="bg-white bg-opacity-20 backdrop-blur-md rounded-xl p-10 md:p-16 max-w-7xl mx-auto">
-        <!-- Heading -->
-        <h1 class="text-4xl md:text-6xl font-bold mb-4">Bienvenidos a Mudanzas Tropicales</h1>
-        <!-- Description -->
-        <p class="text-lg md:text-xl mb-6">
-          Somos expertos en mudanzas con un toque tropical. Nos encargamos de que tu experiencia sea tan relajante como un día en la playa.
-        </p>
-        <!-- Button -->
-        <a href="#contacto" class="bg-teal-500 hover:bg-teal-600 text-white font-semibold py-3 px-6 rounded-lg shadow-lg">
-          Comenzar
-        </a>
+    
+    <!-- Overlay para mejorar legibilidad -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/70 to-black/20 z-10"></div>
+    
+    <!-- Contenido centrado -->
+    <div class="relative z-20 flex items-center justify-center h-full w-full p-4 pt-16">
+      <!-- Tarjeta manteniendo tu diseño original -->
+      <div id="card" class="rounded-xl p-6 md:p-10 max-w-4xl w-full">
+        <!-- Heading con efectos de gradiente en KEYS y COAST -->
+        <h1 class="text-white text-4xl md:text-5xl mb-3 font-bold">
+          From the <br>
+          <b class="text-green-400 text-6xl md:text-8xl animate-float animation">KEYS</b><br>
+          to the<br>
+          <b class="text-blue-600 text-6xl md:text-8xl animate-float animation" style="animation-delay: 0.5s">COAST</b> <br>
+          we keep you moving
+        </h1> 
+        <h2 class="text-xl md:text-2xl font-bold mb-8 text-white mt-4">
+          Your <b class="text-green-400">Stress-Free</b> Move Starts Here
+        </h2>
+        
+        <!-- Campo de presupuesto -->
+        <section class="w-full flex justify-center">
+          <div class="flex items-center space-x-2 bg-white border border-gray-300 rounded-full px-6 py-3 transition-all duration-300 focus-within:ring-2 focus-within:ring-blue-400 shadow-lg w-72 focus-within:w-80">
+            <input 
+              type="text" 
+              placeholder="Initial quote" 
+              class="flex-grow bg-transparent outline-none text-gray-700 placeholder-gray-400 transition-all duration-300 text-lg"
+            />
+            <button class="text-green-400 text-3xl  hover:bg-blue-500 hover:text-white transition px-2 py-1 rounded-full focus:bg-gray-400 focus:text-white flex items-center justify-center">
+              <a href="{% url 'calculator_page' %}" class="flex items-center justify-center text-center"><i class='bx bx-arrow-right-circle'></i></a>
+            </button>
+          </div>
+        </section>
       </div>
+    </div>
+    
+    <!-- Flecha para scroll hacia abajo -->
+    <div class="scroll-down-arrow" id="scroll-down">
+      <i class='bx bx-chevron-down'></i>
     </div>
   </section>
 
-  <script>
-    // Toggle Mobile Menu
-    const menuBtn = document.getElementById('menu-btn');
-    const mobileMenu = document.getElementById('mobile-menu');
+  <!--About us-->
+  <section data-aos="fade-up" class="w-full min-h-screen flex flex-col justify-start items-center relative bg-cover bg-center bg-[url('static/ola.jpg')] py-10">
+        <h2  id="sobre-nosotros" class="w-full flex justify-center text-[#f18f2e] text-6xl md:text-8xl h-16 mb-10 funnel-sans">About us</h2>
+        <div class="flex flex-col md:flex-row justify-center items-center w-full max-w-7xl px-4">
+            <ul class="flex flex-col justify-center gap-5 w-full md:w-1/4 mb-8 md:mb-0 md:mr-10">
+                <li class="elemento cursor-pointer border-b-4 border-[#f18f2e] w-[200px] transition-all duration-400 ease-linear active-section" data-target="tropical">Tropical Moving Solutions</li>
+                <li class="elemento cursor-pointer border-b-4 border-[#f18f2e] w-[200px] transition-all duration-400 ease-linear" data-target="founder">Meet Our Founder</li>
+                <li class="elemento cursor-pointer border-b-4 border-[#f18f2e] w-[200px] transition-all duration-400 ease-linear" data-target="mission">Our Mission</li>
+            </ul>
+            
+            <section class="relative w-full md:w-3/4 h-[600px] overflow-hidden flex justify-center items-center">
+                <!-- Contenedor Tropical Moving Solutions -->
+                <div class="info-container absolute top-4 left-0 w-full h-3/4 transform transition-all duration-500 ease-in-out" id="tropical">
+                    <div class="bg-gray-100 rounded-xl shadow-lg h-full">
+                        <div class="container mx-auto py-8 sm:px-6 lg:px-8 h-full">
+                            <div class="flex flex-col md:flex-row justify-center items-center h-full">
+                                <div class="max-w-lg mb-8 md:mb-0">
+                                    <h2 class="text-3xl font-extrabold text-green-500 sm:text-4xl">Tropical Moving Solutions</h2>
+                                    <p class="mt-4 text-gray-600 text-lg">
+                                        At Tropical Moving Solutions, we’re more than just a moving company — 
+                                        we’re your trusted partner in making transitions smooth, stress-free, and even enjoyable. 
+                                        Whether you’re moving across town or across the state, our team is committed to handling 
+                                        your belongings with care, professionalism, and efficiency.
+                                    </p>
+                                    <div class="mt-8">
+                                        <a href="#" class="text-blue-500 hover:text-blue-600 font-medium">
+                                            Learn more about us
+                                            <span class="ml-2">&#8594;</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="mt-0 md:mt-0">
+                                    <div class="bg-gray-200 border-2 border-dashed rounded-xl w-64 h-64 flex items-center justify-center text-gray-500">
+                                        <img src="static/logo.jpg" alt="Logo">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contenedor Meet Our Founder -->
+                <div class="info-container absolute top-12 left-0 w-full h-full transform translate-x-full transition-all duration-500 ease-in-out" id="founder">
+                    <div class="relative mb-8 max-w-sm mx-auto mt-8">
+                        <div class="rounded-xl overflow-hidden shadow-lg bg-gray-100">
+                            <div class="absolute -mt-20 w-full flex justify-center">
+                                <div class="h-32 w-32">
+                                    <div class="bg-gray-200 border-2 border-dashed rounded-full w-32 h-32 flex items-center justify-center text-gray-500">
+                                        <img class="bg-cover rounded-full" src="static/logo.jpg" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="px-6 mt-16">
+                                <h1 class="font-bold text-3xl text-center mb-1 text-green-500">Meet Our Founder</h1>
+                                <p class="text-gray-800 text-sm text-center">Antony Días</p>
+                                <p class="text-center text-gray-600 text-base pt-3 font-normal">
+                                    Founded by Anthony Diaz, a passionate entrepreneur with a sharp eye for business and a deep desire to help people, Tropical 
+                                    Moving Solutions was born from a simple idea: moving should be easier. Anthony saw a need for a service that put people first —
+                                    with friendly movers, honest pricing, and reliable scheduling — and he built a company that reflects those values every day.
+                                </p>
+                                <div class="w-full flex justify-center pt-5 pb-5">
+                                    <a href="#" class="mx-5">
+                                        <div aria-label="Github">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                                fill="none" stroke="#718096" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" class="feather feather-github">
+                                                <path
+                                                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="mx-5">
+                                        <div aria-label="Twitter">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                                fill="none" stroke="#718096" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" class="feather feather-twitter">
+                                                <path
+                                                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                                </path>
+                                            </svg>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="mx-5">
+                                        <div aria-label="Instagram">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                                fill="none" stroke="#718096" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" class="feather feather-instagram">
+                                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                            </svg>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contenedor Our Mission -->
+                <div class="info-container absolute top-0 left-0 w-full h-full transform translate-x-full transition-all duration-500 ease-in-out" id="mission">
+                    <div class="w-full h-full flex justify-center items-center px-4">
+                        <div class="max-w-screen-xl w-full">
+                            <div class="sm:w-full p-5 flex items-center justify-center">
+                                <div class="text max-w-2xl">
+                                    <span class="text-gray-500 border-b-2 border-blue-600 uppercase">Our Mission</span>
+                                    <h2 class="my-4 font-bold text-3xl sm:text-4xl">
+                                        About <span class="text-green-500">Our Company</span>
+                                    </h2>
+                                    <p class="text-gray-700 text-lg">
+                                        We believe moving is more than just transportation. It’s a new chapter — and we’re here to help you start strong. 
+                                        Our mission is to deliver not just your belongings, but also peace of mind through excellent customer service, 
+                                        trustworthy teams, and attention to every detail.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+    <section data-aos="fade-up" class="bg-cover bg-center bg-[url('static/pricing_back.jpg')] bg-no-repeat">
+     <div class="max-w-4xl mx-auto text-center mb-16">
+        <h1 id="servicios" class="text-4xl md:text-5xl font-bold text-[#f18f2e] funnel-sans mb-4">Moving Service Plans</h1>
+        <p class="text-xl text-[#f18f2e] max-w-2xl mx-auto funnel-sans-light">
+            Choose the perfect moving package for your needs. All plans include professional packing, careful handling, and timely delivery.
+        </p>
+    </div>
 
-    menuBtn.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
+    <!-- Pricing Cards -->
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Card 1: Basic Moving -->
+            <div class="pricing-card bg-white rounded-xl shadow-md overflow-hidden relative">
+                <div class="bg-blue-500 px-5 py-6">
+                    <h3 class="text-lg font-medium text-white">Basic Moving</h3>
+                    <p class="text-blue-100 text-sm mt-1">Perfect for small apartments</p>
+                    <p class="text-price-orange mt-3 text-3xl font-extrabold tracking-tight">
+                        <span class="price-highlight text-green-300">$299</span>
+                        <span class="text-orange-100 text-base font-medium">/service</span>
+                    </p>
+                </div>
+                <div class="px-5 py-6">
+                    <ul class="text-gray-700 text-sm space-y-3">
+                        <li><span class="feature-icon included"><i class="fas fa-check"></i></span>Up to 1 room furniture</li>
+                        <li><span class="feature-icon included"><i class="fas fa-check"></i></span>Local moving within 20 miles</li>
+                        <li><span class="feature-icon included"><i class="fas fa-check"></i></span>2 professional movers</li>
+                        <li><span class="feature-icon included"><i class="fas fa-check"></i></span>Basic insurance coverage</li>
+                        <li><span class="feature-icon not-included"><i class="fas fa-times"></i></span>Packing materials</li>
+                        <li><span class="feature-icon not-included"><i class="fas fa-times"></i></span>Disassembly/reassembly</li>
+                        <li><span class="feature-icon not-included"><i class="fas fa-times"></i></span>Storage options</li>
+                    </ul>
+                    <button class="mt-5 w-full px-4 py-3 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition duration-200 flex items-center justify-center">
+                        <i class="fas fa-calendar-check mr-2"></i> Book Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 2: Standard Moving (Recommended) -->
+            <div class="pricing-card bg-white rounded-xl shadow-lg overflow-hidden relative">
+                <div class="absolute top-4 right-4 popular-badge text-xs font-bold py-2 px-4 rounded-full uppercase">
+                    Most Popular
+                </div>
+                <div class="bg-blue-600 px-5 py-6">
+                    <h3 class="text-lg font-medium text-white">Standard Moving</h3>
+                    <p class="text-blue-100 text-sm mt-1">Ideal for 2-3 bedroom homes</p>
+                    <p class="text-price-orange mt-3 text-3xl font-extrabold tracking-tight">
+                        <span class="price-highlight text-green-400">$799</span>
+                        <span class="text-orange-100 text-base font-medium">/service</span>
+                    </p>
+                </div>
+                <div class="px-5 py-6">
+                    <ul class="text-gray-700 text-sm space-y-3">
+                        <li><span class="feature-icon included"><i class="fas fa-check"></i></span>Up to 3 rooms of furniture</li>
+                        <li><span class="feature-icon included"><i class="fas fa-check"></i></span>Regional moving within 100 miles</li>
+                        <li><span class="feature-icon included"><i class="fas fa-check"></i></span>3 professional movers</li>
+                        <li><span class="feature-icon included"><i class="fas fa-check"></i></span>Standard insurance coverage</li>
+                        <li><span class="feature-icon included"><i class="fas fa-check"></i></span>Basic packing materials included</li>
+                        <li><span class="feature-icon included"><i class="fas fa-check"></i></span>Furniture disassembly/reassembly</li>
+                        <li><span class="feature-icon not-included"><i class="fas fa-times"></i></span>Long-term storage</li>
+                    </ul>
+                    <button class="mt-5 w-full px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold rounded-lg hover:from-orange-600 hover:to-orange-700 transition duration-200 flex items-center justify-center">
+                        <i class="fas fa-star mr-2"></i> Book Now
+                    </button>
+                </div>
+            </div>
+
+            <!-- Card 3: Premium Moving -->
+            <div class="pricing-card bg-white rounded-xl shadow-md overflow-hidden relative">
+                <div class="bg-blue-700 px-5 py-6">
+                    <h3 class="text-lg font-medium text-white">Premium Moving</h3>
+                    <p class="text-blue-100 text-sm mt-1">Complete solution for large homes</p>
+                    <p class="text-price-orange mt-3 text-3xl font-extrabold tracking-tight">
+                        <span class="price-highlight text-green-500">$1499</span>
+                        <span class="text-orange-100 text-base font-medium">/service</span>
+                    </p>
+                </div>
+                <div class="px-5 py-6">
+                    <ul class="text-gray-700 text-sm space-y-3">
+                        <li><span class="feature-icon included"><i class="fas fa-check"></i></span>Entire house moving</li>
+                        <li><span class="feature-icon included"><i class="fas fa-check"></i></span>Long distance moving (500+ miles)</li>
+                        <li><span class="feature-icon included"><i class="fas fa-check"></i></span>5 professional movers</li>
+                        <li><span class="feature-icon included"><i class="fas fa-check"></i></span>Premium insurance coverage</li>
+                        <li><span class="feature-icon included"><i class="fas fa-check"></i></span>Full packing & unpacking service</li>
+                        <li><span class="feature-icon included"><i class="fas fa-check"></i></span>Specialty item handling</li>
+                        <li><span class="feature-icon included"><i class="fas fa-check"></i></span>1 month storage included</li>
+                    </ul>
+                    <button class="mt-5 w-full px-4 py-3 bg-blue-700 text-white font-medium rounded-lg hover:bg-blue-800 transition duration-200 flex items-center justify-center">
+                        <i class="fas fa-crown mr-2"></i> Book Now
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+    <!-- Additional Information -->
+    <div  data-aos="fade-up" class="max-w-4xl mx-auto mt-12 bg-white bg-opacity-90 p-8 rounded-xl shadow-lg">
+        <h2 id="testimonios" class="text-2xl font-bold text-gray-800 mb-4">Why Choose Our Moving Services?</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="flex items-start">
+                <div class="text-moving-blue text-2xl mr-3"><i class="fas fa-shield-alt"></i></div>
+                <div>
+                    <h3 class="font-semibold text-gray-800">Fully Insured</h3>
+                    <p class="text-gray-600 mt-1">All our services include comprehensive insurance coverage for your peace of mind.</p>
+                </div>
+            </div>
+            <div class="flex items-start">
+                <div class="text-moving-blue text-2xl mr-3"><i class="fas fa-clock"></i></div>
+                <div>
+                    <h3 class="font-semibold text-gray-800">On-Time Guarantee</h3>
+                    <p class="text-gray-600 mt-1">We guarantee punctual service or we'll compensate you for the delay.</p>
+                </div>
+            </div>
+            <div class="flex items-start">
+                <div class="text-moving-blue text-2xl mr-3"><i class="fas fa-user-tie"></i></div>
+                <div>
+                    <h3 class="font-semibold text-gray-800">Professional Team</h3>
+                    <p class="text-gray-600 mt-1">Our movers are background-checked professionals with years of experience.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+    <!--Testimony session-->
+     <section data-aos="fade-up" class="flex justify-center">
+      <div class="max-w-4xl w-full ">
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xlmb-6b text-[#f18f2e] funnel-sans mt-2 md:text-8xl">
+                What Our Customers Say
+            </h1>
+            <p class="text-lg max-w-2xl mx-auto text-[#f18f2e] funnel-sans">
+                Hear from satisfied clients who trusted us with their moving needs
+            </p>
+        </div>
+        
+        <!-- Testimonial Slider -->
+        <div class="testimonial-container relative bg-white rounded-2xl shadow-xl p-8 md:p-12 mb-16">
+            <div class="relative">
+                <!-- Testimonial Cards -->
+                <div class="relative min-h-[300px] overflow-hidden">
+                    <!-- Testimonial 1 -->
+                    <div class="testimonial-card absolute inset-0 p-4 md:p-6 active">
+                        <i class="fas fa-quote-right text-primary quote-icon"></i>
+                        <div class="relative z-10">
+                            <p class="testimonial-text text-gray-700 text-xl md:text-2xl leading-relaxed italic font-serif mb-8 relative pl-8">
+                                "Moving Solutions made our relocation stress-free! The team was professional, 
+                                efficient, and handled all our belongings with care. They arrived on time, 
+                                worked quickly, and everything arrived in perfect condition. Highly recommend!"
+                            </p>
+                            <div class="flex items-center">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100&q=80" 
+                                     alt="Sarah Johnson" 
+                                     class="w-16 h-16 rounded-full object-cover border-4 border-blue-100">
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-bold text-gray-800">Sarah Johnson</h4>
+                                    <p class="text-primary">New York to Boston</p>
+                                </div>
+                                <div class="ml-auto flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 2 -->
+                    <div class="testimonial-card absolute inset-0 p-4 md:p-6">
+                        <i class="fas fa-quote-right text-primary quote-icon"></i>
+                        <div class="relative z-10">
+                            <p class="testimonial-text text-gray-700 text-xl md:text-2xl leading-relaxed italic font-serif mb-8 relative pl-8">
+                                "I was nervous about moving across the country, but Moving Solutions exceeded 
+                                my expectations. Their long-distance moving service was impeccable. Everything 
+                                arrived ahead of schedule and in perfect condition."
+                            </p>
+                            <div class="flex items-center">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100&q=80" 
+                                     alt="Michael Chen" 
+                                     class="w-16 h-16 rounded-full object-cover border-4 border-blue-100">
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-bold text-gray-800">Michael Chen</h4>
+                                    <p class="text-primary">Chicago to Seattle</p>
+                                </div>
+                                <div class="ml-auto flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 3 -->
+                    <div class="testimonial-card absolute inset-0 p-4 md:p-6">
+                        <i class="fas fa-quote-right text-primary quote-icon"></i>
+                        <div class="relative z-10">
+                            <p class="testimonial-text text-gray-700 text-xl md:text-2xl leading-relaxed italic font-serif mb-8 relative pl-8">
+                                "We hired Moving Solutions for our office relocation and couldn't be happier. 
+                                They worked after hours to minimize disruption, carefully packed all our equipment, 
+                                and set everything up perfectly in our new space."
+                            </p>
+                            <div class="flex items-center">
+                                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100&q=80" 
+                                     alt="Emily Rodriguez" 
+                                     class="w-16 h-16 rounded-full object-cover border-4 border-blue-100">
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-bold text-gray-800">Emily Rodriguez</h4>
+                                    <p class="text-primary">Office Relocation</p>
+                                </div>
+                                <div class="ml-auto flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonial 4 -->
+                    <div class="testimonial-card absolute inset-0 p-4 md:p-6">
+                        <i class="fas fa-quote-right text-primary quote-icon"></i>
+                        <div class="relative z-10">
+                            <p class="testimonial-text text-gray-700 text-xl md:text-2xl leading-relaxed italic font-serif mb-8 relative pl-8">
+                                "Moving overseas was a daunting task, but Moving Solutions handled everything 
+                                seamlessly. From customs paperwork to careful packing of fragile items, they 
+                                managed it all. Our belongings arrived safely and on time."
+                            </p>
+                            <div class="flex items-center">
+                                <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&h=100&q=80" 
+                                     alt="David Wilson" 
+                                     class="w-16 h-16 rounded-full object-cover border-4 border-blue-100">
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-bold text-gray-800">David Wilson</h4>
+                                    <p class="text-primary">International Move</p>
+                                </div>
+                                <div class="ml-auto flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Indicators -->
+            <div class="flex justify-center mt-10 space-x-3">
+                <div class="dot w-3 h-3 rounded-full bg-blue-300 cursor-pointer active"></div>
+                <div class="dot w-3 h-3 rounded-full bg-blue-300 cursor-pointer"></div>
+                <div class="dot w-3 h-3 rounded-full bg-blue-300 cursor-pointer"></div>
+                <div class="dot w-3 h-3 rounded-full bg-blue-300 cursor-pointer"></div>
+            </div>
+        </div>
+        
+        <!-- Moving Truck Animation -->
+        <div class="relative h-16 overflow-hidden">
+            <div class="truck-animation absolute top-0 left-0">
+                <i class="fas fa-truck-moving text-4xl text-blue-500 mx-6"></i>
+                <i class="fas fa-truck-moving text-4xl text-blue-500 mx-6"></i>
+                <i class="fas fa-truck-moving text-4xl text-blue-500 mx-6"></i>
+                <i class="fas fa-truck-moving text-4xl text-blue-500 mx-6"></i>
+                <i class="fas fa-truck-moving text-4xl text-blue-500 mx-6"></i>
+                <i class="fas fa-truck-moving text-4xl text-blue-500 mx-6"></i>
+                <i class="fas fa-truck-moving text-4xl text-blue-500 mx-6"></i>
+            </div>
+        </div>
+    </div>
+     </section> 
+    <footer id="contacto" class="w-full py-16 bg-black bg-opacity-55">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between">
+                <!-- Columna de redes sociales -->
+                <div class="w-full md:w-2/5 mb-12 md:mb-0 flex flex-col items-center md:items-start">
+                    <h4 class="text-xl font-semibold text-white mb-6">Follow us in social media</h4>
+                    <div class="flex space-x-6">
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
+                                fill="none" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-instagram instagram">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
+                                fill="none" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-twitter twitter">
+                                <path
+                                    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                                </path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
+                                fill="none" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-github github">
+                                <path
+                                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                                </path>
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="mt-8 text-slate-300">
+                        <p class="mb-2"><i class="fas fa-envelope mr-3"></i>tropicals@gmail.com</p>
+                        <p><i class="fas fa-phone mr-3"></i>+1 (123) 456-7890</p>
+                    </div>
+                </div>
+
+                <!-- Columna de texto -->
+                <div class="w-full md:w-1/2">
+                    <h4 class="text-xl font-semibold text-white mb-6">Keep on Traking</h4>
+                    <p class="text-slate-300 leading-relaxed mb-6">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque fuga totam quas necessitatibus 
+                        molestias ipsam, adipisci blanditiis nisi? Voluptatum, sint? Hic 
+                        vitae nam nisi voluptatem veritatis quod minima fugit fuga.
+                    </p>
+                    <div class="flex space-x-4">
+                        <button class="px-5 py-2 bg-accent text-white rounded-lg bg-indigo-700  hover:bg-indigo-950 ransition duration-300">
+                            <a href="{% url 'contact_page' %}"> Contact</a>
+                        </button>
+                        <button class="px-5 py-2 border border-slate-500 text-slate-300 rounded-lg hover:bg-slate-800 transition duration-300">
+                            more information
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Separador -->
+            <div class="border-t border-slate-700 my-12"></div>
+
+            <!-- Información adicional y copyright -->
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-slate-400 mb-4 md:mb-0">
+                    <p>&copy; 2025 Tropical Moving Solutions . all the rights in the IP.</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-slate-400 hover:text-white transition">Terms</a>
+                    <a href="#" class="text-slate-400 hover:text-white transition">Privicy</a>
+                    <a href="#" class="text-slate-400 hover:text-white transition">Cookies</a>
+                    <a href="#" class="text-slate-400 hover:text-white transition">FAQ</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Seleccionar todos los enlaces de navegación
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            // Función para manejar el clic
+            function handleNavClick(event) {
+                
+                // Remover clase 'active' de todos los enlaces
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                });
+                
+                // Añadir clase 'active' al enlace clickeado
+                this.classList.add('active');
+            }
+            
+            // Añadir event listener a cada enlace
+            navLinks.forEach(link => {
+                link.addEventListener('click', handleNavClick);
+            });
+        });
+         // Imágenes
+    const images = [
+      'https://images.unsplash.com/photo-1515238152791-8216bfdf89a7?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+     ' https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1593032232062-3367ef9cd0e0?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1586781383963-8e66f88077ec?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1512100356356-de1b84283e18?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2075&q=80'
+    ];
+    
+    // Obtener elementos del DOM
+    const carousel = document.getElementById('carousel');
+    let currentIndex = 0;
+    
+    // Crear elementos de imagen para el carrusel
+    images.forEach((src, index) => {
+      const imgDiv = document.createElement('div');
+      imgDiv.className = `carousel-item ${index === 0 ? 'active' : ''}`;
+      imgDiv.style.backgroundImage = `url(${src})`;
+      imgDiv.dataset.index = index;
+      carousel.appendChild(imgDiv);
     });
-  </script>
-
+    
+    // Función para cambiar las imágenes
+    function changeBackground() {
+      // Ocultar imagen actual
+      const currentImg = document.querySelector('.carousel-item.active');
+      if (currentImg) {
+        currentImg.classList.remove('active');
+      }
+      
+      // Calcular siguiente índice
+      currentIndex = (currentIndex + 1) % images.length;
+      
+      // Mostrar siguiente imagen
+      const nextImg = document.querySelector(`.carousel-item[data-index="${currentIndex}"]`);
+      if (nextImg) {
+        nextImg.classList.add('active');
+      }
+    }
+    
+    // Iniciar el carrusel
+    setTimeout(() => {
+      // Cambiar imagen cada 5 segundos
+      setInterval(changeBackground, 3000);
+    }, 1000);
+    
+    // Animación de entrada para la tarjeta
+    document.addEventListener('DOMContentLoaded', () => {
+      const card = document.getElementById('card');
+      card.classList.add('animate-fadeIn');
+    });
+    
+    // Función para el scroll hacia abajo
+    document.getElementById('scroll-down').addEventListener('click', () => {
+      const nextSection = document.getElementById('sobre-nosotros');
+      if (nextSection) {
+        nextSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+    
+    // Agregar efecto de teclado para scroll
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowDown') {
+        const nextSection = document.getElementById('sobre-nosotros');
+        if (nextSection) {
+          nextSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    });
+        // Toggle Mobile Menu
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (menuBtn && mobileMenu) {
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+        
+        // Elementos de la lista
+        const elementos = document.querySelectorAll(".elemento");
+        const infoContainers = document.querySelectorAll(".info-container");
+        
+        // Mostrar sección activa
+        function showSection(targetId) {
+            // Actualizar elementos de la lista
+            elementos.forEach(el => {
+                el.classList.remove("w-[230px]", "border-b-orange-700", "font-bold");
+                el.classList.add("border-b-orange-600");
+            });
+            
+            // Actualizar contenedores
+            infoContainers.forEach(container => {
+                if (container.id === targetId) {
+                    container.classList.remove("translate-x-full", "opacity-0");
+                    container.classList.add("translate-x-0", "opacity-100");
+                } else {
+                    container.classList.remove("translate-x-0", "opacity-100");
+                    container.classList.add("translate-x-full", "opacity-0");
+                }
+            });
+            
+            // Resaltar elemento activo
+            const activeElement = Array.from(elementos).find(el => el.dataset.target === targetId);
+            if (activeElement) {
+                activeElement.classList.add("w-[230px]", "border-b-orange-700", "font-bold");
+                activeElement.classList.remove("border-b-orange-600");
+            }
+        }
+        
+        // Eventos para elementos de la lista
+        elementos.forEach(elemento => {
+            elemento.addEventListener("click", () => {
+                const targetId = elemento.dataset.target;
+                showSection(targetId);
+            });
+        });
+        
+        // Inicializar con la primera sección activa
+        showSection('tropical');
+                document.addEventListener('DOMContentLoaded', function() {
+            const testimonials = document.querySelectorAll('.testimonial-card');
+            const dots = document.querySelectorAll('.dot');
+            let currentIndex = 0;
+            let interval;
+            
+            // Function to show testimonial
+            function showTestimonial(index) {
+                // Hide all testimonials
+                testimonials.forEach(testimonial => {
+                    testimonial.classList.remove('active');
+                });
+                
+                // Remove active class from all dots
+                dots.forEach(dot => {
+                    dot.classList.remove('active');
+                });
+                
+                // Show selected testimonial
+                testimonials[index].classList.add('active');
+                
+                // Activate corresponding dot
+                dots[index].classList.add('active');
+                
+                // Update current index
+                currentIndex = index;
+            }
+            
+            // Function to show next testimonial
+            function nextTestimonial() {
+                const nextIndex = (currentIndex + 1) % testimonials.length;
+                showTestimonial(nextIndex);
+            }
+            
+            // Start automatic slider
+            function startSlider() {
+                interval = setInterval(nextTestimonial, 5000);
+            }
+            
+            // Initialize slider
+            function initSlider() {
+                // Show first testimonial
+                showTestimonial(0);
+                
+                // Start automatic slider
+                startSlider();
+                
+                // Add click event to dots
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        clearInterval(interval);
+                        showTestimonial(index);
+                        startSlider();
+                    });
+                });
+            }
+            
+            // Initialize the slider
+            initSlider();
+        });
+    </script>
+      <script>
+  AOS.init();
+</script>
 </body>
 </html>
