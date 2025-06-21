@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +7,7 @@
     <title>Tropical Solutions - Moving Cost Calculator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" href="static/logo.jpg">
+    <link rel="icon" href="{% static 'logo.jpg' %}">
     <script>
         tailwind.config = {
             theme: {
@@ -41,7 +42,8 @@
         }
     </style>
 </head>
-<body class="bg-cover bg-center bg-[url('static/calculator-back.jpg')] bg-no-repeat">
+{% load static %}
+<body class="bg-cover bg-center absolute inset-0  bg-[url('{% static "calculator-back.jpg" %}')]">
     <!-- Header -->
     <header class="bg-gradient-to-r from-primary to-secondary text-white py-5 px-4">
         <div class="container mx-auto flex justify-center items-center">

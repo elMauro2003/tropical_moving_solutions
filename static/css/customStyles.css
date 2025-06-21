@@ -1,0 +1,209 @@
+.funnel-sans{
+    font-family: "Funnel Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+}
+.funnel-sans-light{
+    font-family: "Funnel Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+.nav-link {
+    position: relative;
+    transition: all 0.3s ease;
+    padding-bottom: 4px;
+}
+          
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #0d9488;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+.nav-link:hover {
+    color: #0d9488;
+}
+
+.nav-link.active {
+    color: #0d9488;
+}
+
+.nav-link.active::after {
+    width: 100%;
+    background-color: #0d9488;
+}
+
+/* Estilo para el degradado en KEYS y COAST */
+.gradient-text {
+    background: linear-gradient(to bottom, currentColor 100%,transparent);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+/* Estilos del carrusel */
+.carousel-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    background-size: cover;
+    background-position: center;
+    transition: opacity 1.5s ease-in-out;
+    z-index: 0;
+}
+
+.carousel-item.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+/* Estilos para la flecha de scroll */
+.scroll-down-arrow {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    cursor: pointer;
+    animation: bounce 1.5s infinite;
+}
+
+.scroll-down-arrow i {
+    font-size: 3rem;
+    color: white;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.scroll-down-arrow:hover i {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* Sombra para mejorar legibilidad */
+#card {
+    text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+}
+
+/* Navbar */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 30;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+}
+.testimonial-container {
+    perspective: 1000px;
+}
+
+.testimonial-card {
+    transform-style: preserve-3d;
+    opacity: 0;
+    transform: translateX(100px) rotateY(10deg);
+    transition: all 0.8s ease-out;
+}
+
+.testimonial-card.active {
+    opacity: 1;
+    transform: translateX(0) rotateY(0);
+}
+
+.quote-icon {
+    position: absolute;
+    top: -20px;
+    left: -15px;
+    font-size: 120px;
+    opacity: 0.08;
+    z-index: 0;
+}
+.truck-animation {
+    animation: moveTruck 20s linear infinite;
+}
+
+@keyframes moveTruck {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100vw); }
+}
+
+.dot {
+    transition: all 0.3s ease;
+}
+
+.dot.active {
+    width: 28px;
+    background-color: #2563eb;
+}
+    .pricing-card {
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.pricing-card:hover {
+    transform: scale(1.05);
+    border-color: #ff7700;
+    box-shadow: 0 20px 25px -5px rgba(255, 119, 0, 0.25), 0 10px 10px -5px rgba(255, 119, 0, 0.1);
+}
+
+.popular-badge {
+    background: linear-gradient(135deg, #ff8c00, #ff5500);
+    color: white;
+    box-shadow: 0 4px 10px rgba(255, 140, 0, 0.4);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.5px;
+}
+
+.feature-icon {
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 10px;
+    font-size: 12px;
+}
+
+.included {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.not-included {
+    background-color: #fee2e2;
+    color: #b91c1c;
+}
+
+.price-highlight {
+    position: relative;
+    display: inline-block;
+}
+
+.price-highlight::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 107, 0, 0.25);
+    border-radius: 3px;
+    z-index: -1;
+}

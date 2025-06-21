@@ -1,0 +1,46 @@
+<section class="relative h-screen w-full overflow-hidden">
+    <!-- Carrusel de Fondo -->
+    <div id="carousel" class="absolute inset-0 blur-[2px]">
+    <!-- Las imágenes se insertarán dinámicamente con JavaScript -->
+    </div>
+    
+    <!-- Overlay para mejorar legibilidad -->
+    <div class="absolute inset-0 bg-gradient-to-b from-black/70 to-black/20 z-10"></div>
+    
+    <!-- Contenido centrado -->
+    <div class="relative z-20 flex items-center justify-center h-full w-full p-4 pt-16">
+    <!-- Tarjeta manteniendo tu diseño original -->
+    <div id="card" class="rounded-xl p-6 md:p-10 max-w-4xl w-full">
+        <!-- Heading con efectos de gradiente en KEYS y COAST -->
+        <h1 class="text-white text-4xl md:text-5xl mb-3 font-bold">
+        From the <br>
+        <b class="text-green-400 text-6xl md:text-8xl animate-float animation">KEYS</b><br>
+        to the<br>
+        <b class="text-blue-600 text-6xl md:text-8xl animate-float animation" style="animation-delay: 0.5s">COAST</b> <br>
+        we keep you moving
+        </h1> 
+        <h2 class="text-xl md:text-2xl font-bold mb-8 text-white mt-4">
+        Your <b class="text-green-400">Stress-Free</b> Move Starts Here
+        </h2>
+        
+        <!-- Campo de presupuesto -->
+        <section class="w-full flex justify-center">
+        <div class="flex items-center space-x-2 bg-white border border-gray-300 rounded-full px-6 py-3 transition-all duration-300 focus-within:ring-2 focus-within:ring-blue-400 shadow-lg w-72 focus-within:w-80">
+            <input 
+            type="text" 
+            placeholder="Initial quote" 
+            class="flex-grow bg-transparent outline-none text-gray-700 placeholder-gray-400 transition-all duration-300 text-lg"
+            />
+            <button class="text-green-400 text-3xl  hover:bg-blue-500 hover:text-white transition px-2 py-1 rounded-full focus:bg-gray-400 focus:text-white flex items-center justify-center">
+            <a href="{% url 'calculator_page' %}" class="flex items-center justify-center text-center"><i class='bx bx-arrow-right-circle'></i></a>
+            </button>
+        </div>
+        </section>
+    </div>
+    </div>
+    
+    <!-- Flecha para scroll hacia abajo -->
+    <div class="scroll-down-arrow" id="scroll-down">
+    <i class='bx bx-chevron-down'></i>
+    </div>
+</section>
