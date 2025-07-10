@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tropical Solutions - Moving Cost Calculator</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    {% comment %} <link rel="stylesheet" href="{% static 'css/output.css' %}" /> {% endcomment %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="icon" href="{% static 'logo.jpg' %}">
     <script>
         tailwind.config = {
@@ -26,6 +29,9 @@
         
         body {
             font-family: 'Poppins', sans-serif;
+            background: url('{% static "calculator-back.jpg" %}') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
         }
         
         .card-shadow {
@@ -40,177 +46,81 @@
             0% { opacity: 0; transform: translateY(20px) scale(0.95); }
             100% { opacity: 1; transform: translateY(0) scale(1); }
         }
+        
+        .bg-overlay {
+            background: linear-gradient(to bottom, rgba(255,255,255,0) 60%, rgba(255,255,255,0.9) 100%);
+        }
     </style>
 </head>
-{% load static %}
-<body class="bg-cover bg-center absolute inset-0  bg-[url('{% static "calculator-back.jpg" %}')]">
+<body class="relative bg-overlay bg-[url('{% static "calculator-back.jpg" %}')]">
     <!-- Header -->
-    <header class="bg-gradient-to-r from-primary to-secondary text-white py-5 px-4">
+    <header class="bg-gradient-to-r from-primary to-secondary text-white py-4 px-4">
         <div class="container mx-auto flex justify-center items-center">
-            <div class="flex items-center text-2xl gap-2">
+            <div class="flex items-center text-xl gap-2">
                <i class="fa-solid fa-umbrella-beach"></i>
-                <h1 class="text-3xl font-bold">Tropical Solutions</h1>
+                <h1 class="text-2xl font-bold">Tropical Solutions</h1>
             </div>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8 ">
-        <div class="text-center mb-10">
-            <h2 class="text-4xl font-bold text-gray-800 mb-4">Moving Cost Calculator</h2>
-            <p class="text-gray-600 max-w-2xl mx-auto">
-                Get an instant estimate for your move in Miami. Fill out the form below with your moving details and we'll calculate your price immediately.
+    <main class="container mx-auto px-4 py-6">
+        <div class="text-center mb-6">
+            <h2 class="text-3xl font-bold text-gray-800 mb-2">Moving Cost Calculator</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto text-sm">
+                Get an instant estimate for your move in Miami. Fill out the form below with your moving details.
             </p>
         </div>
 
         <!-- Calculator Form -->
-        <div class="bg-white rounded-2xl card-shadow p-6 max-w-3xl mx-auto ">
-            <form id="movingCalculator" class="space-y-6">
-                <!-- Location Selector -->
-                <div>
-                    <label for="location" class="block text-lg font-medium text-gray-700 mb-2">
-                        <i class="fas fa-map-marker-alt text-accent mr-2"></i>Select Location in Miami
-                    </label>
-                    <select id="location" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-                        <option value="" disabled selected>Select a Miami location</option>
-                        <option value="miami-beach">Miami Beach</option>
-                        <option value="downtown">Downtown Miami</option>
-                        <option value="coral-gables">Coral Gables</option>
-                        <option value="brickell">Brickell</option>
-                        <option value="wynwood">Wynwood</option>
-                        <option value="coconut-grove">Coconut Grove</option>
-                        <option value="little-havana">Little Havana</option>
-                        <option value="doral">Doral</option>
-                        <option value="key-biscayne">Key Biscayne</option>
-                        <option value="south-beach">South Beach</option>
-                        <option value="north-miami">North Miami</option>
-                        <option value="kendall">Kendall</option>
-                    </select>
-                </div>
-
-                <!-- Origin and Destination -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="origin" class="block text-lg font-medium text-gray-700 mb-2">
-                            <i class="fas fa-home text-primary mr-2"></i>Pickup Address
-                        </label>
-                        <input type="text" id="origin" placeholder="Enter your current address" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-                    </div>
-                    <div>
-                        <label for="destination" class="block text-lg font-medium text-gray-700 mb-2">
-                            <i class="fas fa-flag-checkered text-secondary mr-2"></i>Destination Address
-                        </label>
-                        <input type="text" id="destination" placeholder="Enter your new address" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-                    </div>
-                </div>
-
-                <!-- Contact and Time -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="phone" class="block text-lg font-medium text-gray-700 mb-2">
-                            <i class="fas fa-phone text-primary mr-2"></i>Phone Number
-                        </label>
-                        <input type="tel" id="phone" placeholder="Enter your phone number" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-                    </div>
-                    <div>
-                        <label for="time" class="block text-lg font-medium text-gray-700 mb-2">
-                            <i class="fas fa-clock text-accent mr-2"></i>Preferred Time
-                        </label>
-                        <select id="time" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-                            <option value="" disabled selected>Select time</option>
-                            <option value="morning">Morning (8AM - 12PM)</option>
-                            <option value="afternoon">Afternoon (12PM - 4PM)</option>
-                            <option value="evening">Evening (4PM - 8PM)</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Moving Details -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div>
-                        <label for="date" class="block text-lg font-medium text-gray-700 mb-2">
-                            <i class="fas fa-calendar-day text-accent mr-2"></i>Moving Date
-                        </label>
-                        <input type="date" id="date" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-                    </div>
-                    <div>
-                        <label for="size" class="block text-lg font-medium text-gray-700 mb-2">
-                            <i class="fas fa-couch text-primary mr-2"></i>Home Size
-                        </label>
-                        <select id="size" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-                            <option value="" disabled selected>Select size</option>
-                            <option value="studio">Studio Apartment</option>
-                            <option value="1bed">1-Bedroom</option>
-                            <option value="2bed">2-Bedroom</option>
-                            <option value="3bed">3-Bedroom</option>
-                            <option value="4bed">4-Bedroom+</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="helpers" class="block text-lg font-medium text-gray-700 mb-2">
-                            <i class="fas fa-users text-secondary mr-2"></i>Helpers Needed
-                        </label>
-                        <select id="helpers" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
-                            <option value="2">2 Helpers</option>
-                            <option value="3">3 Helpers</option>
-                            <option value="4">4 Helpers</option>
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Calculate Button -->
-                <div class="pt-4">
-                    <button type="button" id="calculateBtn" class="w-full bg-gradient-to-r from-accent to-orange-500 hover:from-orange-500 hover:to-red-500 text-white font-bold py-4 px-4 rounded-lg transition-all duration-300 transform hover:scale-[1.02]">
-                        <i class="fas fa-calculator mr-2"></i>Calculate Moving Price
-                    </button>
-                </div>
-            </form>
+        <div id="calculator_form" class="bg-white rounded-xl card-shadow p-5 max-w-2xl mx-auto">
+            {% include "components/calculator_form.html" %}
         </div>
     </main>
 
     <!-- How It Works Section -->
-    <section class="py-10 bg-gradient-to-b from-white to-gray-50">
+    <section class="py-8 bg-gradient-to-b from-white to-gray-50">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">How Our Calculator Works</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <div class="text-center p-6 bg-white rounded-xl card-shadow border-t-4 border-primary">
-                    <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-5">
-                        <i class="fas fa-map-marked-alt text-2xl text-primary"></i>
+            <h2 class="text-2xl font-bold text-center text-gray-800 mb-8">How Our Calculator Works</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+                <div class="text-center p-4 bg-white rounded-lg card-shadow border-t-4 border-primary">
+                    <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-map-marked-alt text-lg text-primary"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2">Select Locations</h3>
-                    <p class="text-gray-600">Choose your starting and ending locations in Miami to determine distance.</p>
+                    <h3 class="text-lg font-bold mb-1">Select Locations</h3>
+                    <p class="text-gray-600 text-sm">Choose starting and ending locations in Miami.</p>
                 </div>
-                <div class="text-center p-6 bg-white rounded-xl card-shadow border-t-4 border-secondary">
-                    <div class="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-5">
-                        <i class="fas fa-home text-2xl text-secondary"></i>
+                <div class="text-center p-4 bg-white rounded-lg card-shadow border-t-4 border-secondary">
+                    <div class="w-12 h-12 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-home text-lg text-secondary"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2">Home Details</h3>
-                    <p class="text-gray-600">Provide information about your home size and moving requirements.</p>
+                    <h3 class="text-lg font-bold mb-1">Home Details</h3>
+                    <p class="text-gray-600 text-sm">Provide home size requirements.</p>
                 </div>
-                <div class="text-center p-6 bg-white rounded-xl card-shadow border-t-4 border-accent">
-                    <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-5">
-                        <i class="fas fa-dollar-sign text-2xl text-accent"></i>
+                <div class="text-center p-4 bg-white rounded-lg card-shadow border-t-4 border-accent">
+                    <div class="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-3">
+                        <i class="fas fa-dollar-sign text-lg text-accent"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-2">Get Instant Quote</h3>
-                    <p class="text-gray-600">Receive a transparent price estimate with no hidden fees.</p>
+                    <h3 class="text-lg font-bold mb-1">Get Quote</h3>
+                    <p class="text-gray-600 text-sm">Receive transparent price estimate.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gradient-to-r from-primary to-secondary text-white py-10">
+    <footer class="bg-gradient-to-r from-primary to-secondary text-white py-8">
         <div class="container mx-auto px-4 text-center">
-            <div class="mb-6">
-                <i class="fas fa-palm-tree text-4xl mb-4"></i>
-                <h3 class="text-2xl font-bold">Tropical Solutions</h3>
-                <p class="mt-2 opacity-80">Professional moving services throughout Miami</p>
+            <div class="mb-4">
+                <i class="fas fa-palm-tree text-3xl mb-2"></i>
+                <h3 class="text-xl font-bold">Tropical Solutions</h3>
+                <p class="mt-1 opacity-80 text-sm">Professional moving services throughout Miami</p>
             </div>
-            <div class="text-lg">
+            <div class="text-base">
                 <p><i class="fas fa-phone mr-2"></i> (305) 555-1234</p>
-                <p class="mt-2"><i class="fas fa-envelope mr-2"></i> tropical@miamimovers.com</p>
+                <p class="mt-1"><i class="fas fa-envelope mr-2"></i> tropical@miamimovers.com</p>
             </div>
-            <div class="border-t border-white/20 mt-8 pt-6 text-center text-white/70">
+            <div class="border-t border-white/20 mt-6 pt-4 text-center text-white/70 text-sm">
                 <p>&copy; 2025 Tropical Solutions. All rights reserved.</p>
             </div>
         </div>
@@ -218,99 +128,12 @@
 
     <!-- Price Modal -->
     <div id="priceModal" class="fixed inset-0 bg-black/60 items-center justify-center z-50 p-4 hidden">
-        <div class="modal-animation bg-white rounded-2xl card-shadow max-w-md w-full mx-4">
-            <div class="p-6">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-2xl font-bold text-gray-800">Your Moving Quote</h3>
-                    <button id="closeModal" class="text-gray-500 hover:text-gray-700">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                
-                <div class="bg-gradient-to-r from-primary/10 to-secondary/10 p-4 rounded-lg mb-6 border border-primary/20">
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-gray-600">Base Price:</span>
-                        <span class="font-bold">$250</span>
-                    </div>
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-gray-600">Distance Fee:</span>
-                        <span class="font-bold">$120</span>
-                    </div>
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-gray-600">Size Surcharge:</span>
-                        <span class="font-bold">$80</span>
-                    </div>
-                    <div class="flex justify-between items-center border-t border-gray-200 pt-3 mt-3">
-                        <span class="text-lg font-bold">Total:</span>
-                        <span class="text-2xl font-bold text-accent">$450</span>
-                    </div>
-                </div>
-                
-                <p class="text-gray-600 mb-6 text-center">
-                    <i class="fas fa-info-circle text-primary mr-1"></i> 
-                    This is an estimate based on the information provided.
-                </p>
-                
-                <div class="space-y-3">
-                    <button id="scheduleBtn" class="w-full bg-gradient-to-r from-secondary to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300">
-                        <i class="fas fa-calendar-check mr-2"></i>Schedule My Move
-                    </button>
-                    <button id="callBtn" class="w-full bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300">
-                        <i class="fas fa-phone mr-2"></i>Call to Confirm Details
-                    </button>
-                </div>
-            </div>
-        </div>
+        {% include "components/price_modal.html" %}
     </div>
 
     <script>
         // Modal functionality
         const calculateBtn = document.getElementById('calculateBtn');
-        const closeModal = document.getElementById('closeModal');
-        const priceModal = document.getElementById('priceModal');
-        
-        calculateBtn.addEventListener('click', function() {
-            // Simple form validation
-            const location = document.getElementById('location').value;
-            const origin = document.getElementById('origin').value;
-            const destination = document.getElementById('destination').value;
-            const phone = document.getElementById('phone').value;
-            
-            if (!location || !origin || !destination || !phone) {
-                alert('Please fill in all required fields: Location, Pickup Address, Destination Address, and Phone Number.');
-                return;
-            }
-            
-            // Generate random price between $300 and $700
-            const randomPrice = Math.floor(Math.random() * 400) + 300;
-            document.querySelector('.text-accent.text-2xl').textContent = '$' + randomPrice;
-            
-            // Show modal
-            priceModal.classList.remove('hidden');
-        });
-        
-        closeModal.addEventListener('click', function() {
-            priceModal.classList.add('hidden');
-        });
-        
-        // Close modal when clicking outside
-        priceModal.addEventListener('click', function(e) {
-            if (e.target === priceModal) {
-                priceModal.classList.add('hidden');
-            }
-        });
-        
-        // Schedule button functionality
-        document.getElementById('scheduleBtn').addEventListener('click', function() {
-            alert('Thank you! A representative will contact you shortly to schedule your move.');
-            priceModal.classList.add('hidden');
-        });
-        
-        // Call button functionality
-        document.getElementById('callBtn').addEventListener('click', function() {
-            alert('Please call us at (305) 555-1234 to confirm your moving details.');
-            priceModal.classList.add('hidden');
-        });
         
         // Set min date for date picker to today
         const today = new Date().toISOString().split('T')[0];
@@ -324,3 +147,4 @@
     </script>
 </body>
 </html>
+

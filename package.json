@@ -1,11 +1,12 @@
 {
   "devDependencies": {
-    "prettier": "^3.4.2",
-    "prettier-plugin-tailwindcss": "^0.6.9",
-    "tailwindcss": "^3.4.17"
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.1.10"
   },
   "scripts": {
-  "build:css": "tailwindcss -i ./static/input.css -o ./static/css/output.css",
-  "watch:css": "tailwindcss -i ./static/input.css -o ./static/css/output.css -w"
-}
+    "build": "tailwindcss -i static/src/input.css -o static/css/output.css",
+    "build:watch": "tailwindcss -i static/src/input.css -o static/css/output.css --watch",
+    "watch:css": "tailwindcss build static/src/main.css -o static/scr/output.css -w"
+  }
 }

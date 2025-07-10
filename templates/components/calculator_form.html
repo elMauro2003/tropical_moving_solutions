@@ -1,0 +1,286 @@
+<form id="movingCalculator" class="space-y-4" 
+    hx-post="{% url 'send_quote' %}" 
+    hx-target="#calculator_form" >
+    {% csrf_token %}
+        <!-- Name Input -->
+        <div>
+            <label for="name" class="block text-base font-medium text-gray-700 mb-1">
+                <i class="fas fa-user text-primary mr-2 text-sm"></i>Your Name
+            </label>
+            <input type="text" id="name" name="name" placeholder="Enter your full name" class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" value="{% if form.name %}{{form.name.value}}{% endif %}">
+            {% if form.name.errors %}
+                <div class="text-red-600">{{ form.name.errors.0 }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Location Selector -->
+        <div>
+            <label for="location" class="block text-base font-medium text-gray-700 mb-1">
+                <i class="fas fa-map-marker-alt text-accent mr-2 text-sm"></i>Select Location
+            </label>
+            <select name="location" id="location" class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                <option value="" disabled {% if not form.location.value %}selected{% endif %}>Select a Miami location</option>
+                <option value="miami-beach" {% if form.location.value == "miami-beach" %}selected{% endif %}>Miami Beach</option>
+                <option value="downtown" {% if form.location.value == "downtown" %}selected{% endif %}>Downtown Miami</option>
+                <option value="coral-gables" {% if form.location.value == "coral-gables" %}selected{% endif %}>Coral Gables</option>
+                <option value="brickell" {% if form.location.value == "brickell" %}selected{% endif %}>Brickell</option>
+                <option value="wynwood" {% if form.location.value == "wynwood" %}selected{% endif %}>Wynwood</option>
+                <option value="coconut-grove" {% if form.location.value == "coconut-grove" %}selected{% endif %}>Coconut Grove</option>
+                <option value="little-havana" {% if form.location.value == "little-havana" %}selected{% endif %}>Little Havana</option>
+                <option value="doral" {% if form.location.value == "doral" %}selected{% endif %}>Doral</option>
+                <option value="key-biscayne" {% if form.location.value == "key-biscayne" %}selected{% endif %}>Key Biscayne</option>
+                <option value="south-beach" {% if form.location.value == "south-beach" %}selected{% endif %}>South Beach</option>
+                <option value="north-miami" {% if form.location.value == "north-miami" %}selected{% endif %}>North Miami</option>
+                <option value="kendall" {% if form.location.value == "kendall" %}selected{% endif %}>Kendall</option>
+            </select>
+            {% if form.location.errors %}
+                <div class="text-red-600">{{ form.location.errors.0 }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Origin and Destination -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label for="origin" class="block text-base font-medium text-gray-700 mb-1">
+                    <i class="fas fa-home text-primary mr-2 text-sm"></i>Pickup Address
+                </label>
+                <input type="text" id="origin" name="origin" placeholder="Current address" class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" value="{{ form.origin.value|default:'' }}">
+                {% if form.origin.errors %}
+                    <div class="text-red-600">{{ form.origin.errors.0 }}</div>
+                {% endif %}
+            </div>
+            <div>
+                <label for="destination" class="block text-base font-medium text-gray-700 mb-1">
+                    <i class="fas fa-flag-checkered text-secondary mr-2 text-sm"></i>Destination Address
+                </label>
+                <input type="text" id="destination" name="destination" placeholder="New address" class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" value="{{ form.destination.value|default:'' }}">
+                {% if form.destination.errors %}
+                    <div class="text-red-600">{{ form.destination.errors.0 }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Contact and Time -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <label for="phone" class="block text-base font-medium text-gray-700 mb-1">
+                    <i class="fas fa-phone text-primary mr-2 text-sm"></i>Phone Number
+                </label>
+                <input type="tel" id="phone" name="phone" placeholder="Your phone number" class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" value="{{ form.phone.value|default:'' }}">
+                {% if form.phone.errors %}
+                    <div class="text-red-600">{{ form.phone.errors.0 }}</div>
+                {% endif %}
+            </div>
+            <div>
+                <label for="time" class="block text-base font-medium text-gray-700 mb-1">
+                    <i class="fas fa-clock text-accent mr-2 text-sm"></i>Preferred Time
+                </label>
+                <select id="time" name="time" class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <option value="" disabled {% if not form.time.value %}selected{% endif %}>Select time</option>
+                    <option value="morning" {% if form.time.value == "morning" %}selected{% endif %}>Morning (8AM - 12PM)</option>
+                    <option value="afternoon" {% if form.time.value == "afternoon" %}selected{% endif %}>Afternoon (12PM - 4PM)</option>
+                    <option value="evening" {% if form.time.value == "evening" %}selected{% endif %}>Evening (4PM - 8PM)</option>
+                </select>
+                {% if form.time.errors %}
+                    <div class="text-red-600">{{ form.time.errors.0 }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Moving Details -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+                <label for="date" class="block text-base font-medium text-gray-700 mb-1">
+                    <i class="fas fa-calendar-day text-accent mr-2 text-sm"></i>Moving Date
+                </label>
+                <input type="date" id="date" name="date" class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" value="{{ form.date.value|default:'' }}">
+                {% if form.date.errors %}
+                    <div class="text-red-600">{{ form.date.errors.0 }}</div>
+                {% endif %}
+            </div>
+            <div>
+                <label for="size" class="block text-base font-medium text-gray-700 mb-1">
+                    <i class="fas fa-couch text-primary mr-2 text-sm"></i>Home Size
+                </label>
+                <select id="size" name="size" class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <option value="" disabled {% if not form.size.value %}selected{% endif %}>Select size</option>
+                    <option value="studio" {% if form.size.value == "studio" %}selected{% endif %}>Studio Apartment</option>
+                    <option value="1bed" {% if form.size.value == "1bed" %}selected{% endif %}>1-Bedroom</option>
+                    <option value="2bed" {% if form.size.value == "2bed" %}selected{% endif %}>2-Bedroom</option>
+                    <option value="3bed" {% if form.size.value == "3bed" %}selected{% endif %}>3-Bedroom</option>
+                    <option value="4bed" {% if form.size.value == "4bed" %}selected{% endif %}>4-Bedroom+</option>
+                </select>
+                {% if form.size.errors %}
+                    <div class="text-red-600">{{ form.size.errors.0 }}</div>
+                {% endif %}
+            </div>
+            <div>
+                <label for="helpers" class="block text-base font-medium text-gray-700 mb-1">
+                    <i class="fas fa-users text-secondary mr-2 text-sm"></i>Helpers Needed
+                </label>
+                <select id="helpers" name="helpers" class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" disabled>
+                    <option value="2" {% if form.helpers.value == "2" %}selected{% endif %}>2 Helpers</option>
+                    <option value="3" {% if form.helpers.value == "3" %}selected{% endif %}>3 Helpers</option>
+                    <option value="4" {% if form.helpers.value == "4" %}selected{% endif %}>4 Helpers</option>
+                </select>
+                <input type="hidden" name="helpers" id="hidden_helpers" value="{{ form.helpers.value|default:'2' }}">
+                {% if form.helpers.errors %}
+                    <div class="text-red-600">{{ form.helpers.errors.0 }}</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Special Items -->
+        <div>
+            <label for="specialItem" class="block text-base font-medium text-gray-700 mb-1">
+                <i class="fas fa-star text-accent mr-2 text-sm"></i>Special Items (optional)
+            </label>
+            <select id="specialItem" name="special_item" class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                <option value="No special items" {% if form.special_item.value == "No special items" %}selected{% endif %}>No special items</option>
+                <option value="grand-piano" {% if form.special_item.value == "grand-piano" %}selected{% endif %}>Pianos (grand, upright, baby grand)</option>
+                <option value="antique-furniture" {% if form.special_item.value == "antique-furniture" %}selected{% endif %}>Antique Furniture</option>
+                <option value="fine-art" {% if form.special_item.value == "fine-art" %}selected{% endif %}>Fine Art and Sculptures</option>
+                <option value="hot-tubs" {% if form.special_item.value == "hot-tubs" %}selected{% endif %}>Hot Tubs and Spas</option>
+                <option value="pool-tables" {% if form.special_item.value == "pool-tables" %}selected{% endif %}>Pool Tables</option>
+                <option value="large-appliances" {% if form.special_item.value == "large-appliances" %}selected{% endif %}>Large Appliances</option>
+                <option value="oversized-furniture" {% if form.special_item.value == "oversized-furniture" %}selected{% endif %}>Oversized Furniture</option>
+                <option value="grandfather-clocks" {% if form.special_item.value == "grandfather-clocks" %}selected{% endif %}>Grandfather Clocks</option>
+                <option value="vehicles" {% if form.special_item.value == "vehicles" %}selected{% endif %}>Vehicles</option>
+                <option value="chandeliers" {% if form.special_item.value == "chandeliers" %}selected{% endif %}>Chandeliers and Light Fixtures</option>
+                <option value="collectibles" {% if form.special_item.value == "collectibles" %}selected{% endif %}>Collectibles and Valuables</option>
+                <option value="safes" {% if form.special_item.value == "safes" %}selected{% endif %}>Safes and Gun Safes</option>
+                <option value="exercise-equipment" {% if form.special_item.value == "exercise-equipment" %}selected{% endif %}>Exercise Equipment</option>
+                <option value="arcade-games" {% if form.special_item.value == "arcade-games" %}selected{% endif %}>Arcade Games and Pinball Machines</option>
+                <option value="outdoor-furniture" {% if form.special_item.value == "outdoor-furniture" %}selected{% endif %}>Outdoor Furniture and Appliances</option>
+                <option value="taxidermy" {% if form.special_item.value == "taxidermy" %}selected{% endif %}>Taxidermy</option>
+                <option value="musical-instruments" {% if form.special_item.value == "musical-instruments" %}selected{% endif %}>Musical Instruments</option>
+                <option value="above-ground-pools" {% if form.special_item.value == "above-ground-pools" %}selected{% endif %}>Above-Ground Pools</option>
+                <option value="wine-collections" {% if form.special_item.value == "wine-collections" %}selected{% endif %}>Wine Collections</option>
+            </select>
+            {% if form.special_item.errors %}
+                <div class="text-red-600">{{ form.special_item.errors.0 }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Calculate Button -->
+        <div class="pt-3">
+            <button type="submit" id="calculateBtn" class="w-full bg-gradient-to-r from-accent to-orange-500 hover:from-orange-500 hover:to-red-500 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 text-sm">
+                <i class="fas fa-calculator mr-2"></i>Calculate Moving Price
+            </button>
+        </div>
+
+        <script>
+            
+            document.addEventListener('DOMContentLoaded', () => {
+                // Función para inicializar los eventos de los selects
+                function initializeSelectLogic() {
+                    const sizeSelect = document.getElementById('size');
+                    const helpersSelect = document.getElementById('helpers');
+            
+                    if (sizeSelect && helpersSelect) {
+                        // Actualizar las opciones de "helpers" según el tamaño de la vivienda
+                        function updateHelpersOptions() {
+                            const selectedSize = sizeSelect.value;
+            
+                            // Limpiar las opciones existentes
+                            helpersSelect.innerHTML = '';
+            
+                            // Definir las opciones según el tamaño de la vivienda
+                            let options;
+                            if (selectedSize === 'studio' || selectedSize === '1bed') {
+                                options = [
+                                    { value: '2', text: '2 Helpers' },
+                                    { value: '3', text: '3 Helpers' },
+                                    { value: '4', text: '4 Helpers' }
+                                ];
+                            } else if (selectedSize === '2bed' || selectedSize === '3bed') {
+                                options = [
+                                    { value: '3', text: '3 Helpers' },
+                                    { value: '4', text: '4 Helpers' },
+                                    { value: '5', text: '5 Helpers' }
+                                ];
+                            } else if (selectedSize === '4bed') {
+                                options = [
+                                    { value: '4', text: '4 Helpers' },
+                                    { value: '5', text: '5 Helpers' },
+                                    { value: '6', text: '6 Helpers' }
+                                ];
+                            } else {
+                                // Opciones predeterminadas si no se selecciona un tamaño
+                                options = [
+                                    { value: '2', text: '2 Helpers' },
+                                    { value: '3', text: '3 Helpers' },
+                                    { value: '4', text: '4 Helpers' }
+                                ];
+                            }
+            
+                            // Agregar las nuevas opciones al select
+                            options.forEach(option => {
+                                const optionElement = document.createElement('option');
+                                optionElement.value = option.value;
+                                optionElement.textContent = option.text;
+                                helpersSelect.appendChild(optionElement);
+                            });
+                        }
+            
+                        // Vincular el evento de cambio al select de tamaño
+                        sizeSelect.addEventListener('change', updateHelpersOptions);
+            
+                        // Inicializar las opciones al cargar la página
+                        updateHelpersOptions();
+                    }
+                }
+            
+                // Inicializar la lógica de los selects al cargar la página
+                initializeSelectLogic();
+            
+                // Volver a inicializar la lógica después de que HTMX actualice el contenido
+                document.body.addEventListener('htmx:afterSwap', (event) => {
+                    if (event.target.id === 'calculator_form') {
+                        initializeSelectLogic();
+                    }
+                });
+            });
+    
+        </script>
+
+
+        {% if tag_message  == "Something went wrong!" %}
+            <script>                
+                Swal.fire({
+                    position: "top-center",
+                    icon: '{% if "error" in tags %}error{% elif "success" in tags %}success{% elif "info" in tags %}info{% elif "warning" in tags %}warning{% else %}question{% endif %}',
+                    title: "{{tag_message}}",
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+                
+            </script>
+        {% elif tag_message  == "Quote Sent Successfully!" %}
+
+            <div
+            hx-get="{% url 'partial_load' %}"
+            hx-target="#priceModal"
+            hx-trigger="load"
+            hx-include="[name='size']"
+            >
+            </div>
+
+            <script>
+                priceModal.classList.remove('hidden');
+
+                closeModal.addEventListener('click', function() {
+                    priceModal.classList.add('hidden');
+                });
+                
+                // Close modal when clicking outside
+                priceModal.addEventListener('click', function(e) {
+                    if (e.target === priceModal) {
+                        priceModal.classList.add('hidden');
+                    }
+                });
+            </script>
+        {% endif %}
+
+    </form>
+    

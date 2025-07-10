@@ -1,0 +1,85 @@
+<div class="modal-animation bg-white rounded-2xl card-shadow max-w-md w-full mx-4">
+    <div class="p-6">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="text-2xl font-bold text-gray-800">Your Moving Quote</h3>
+            <button id="closeModal" class="text-gray-500 hover:text-gray-700">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="bg-gradient-to-r from-primary/10 to-secondary/10 p-4 rounded-lg mb-6 border border-primary/20">
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-gray-600">Base Price:</span>
+                <span class="font-bold">${{base_price}}</span>
+            </div>
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-gray-600">Truck Fee</span>
+                <span class="font-bold">$200</span>
+            </div>
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-gray-600">White Glove</span>
+                <span class="font-bold">${{white_glove}}</span>
+            </div>
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-gray-600">Packing</span>
+                <span class="font-bold">${{packing}}</span>
+            </div>
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-gray-600">Accessibility</span>
+                <span class="font-bold">$50</span>
+            </div>
+            <div class="flex justify-between items-center border-t border-gray-200 pt-3 mt-3">
+                <span class="text-lg font-bold">Total:</span>
+                <span class="text-2xl font-bold text-accent">${{total_amount}}</span>
+            </div>
+        </div>
+        
+        <p class="text-gray-600 mb-6 text-center text-sm">
+            <i class="fas fa-info-circle text-primary mr-1"></i> 
+            This is an estimate based on the information provided.
+        </p>
+        
+        <div class="space-y-3">
+            <button id="scheduleBtn" class="w-full bg-gradient-to-r from-secondary to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 text-sm">
+                <i class="fas fa-calendar-check mr-2"></i>Schedule My Move
+            </button>
+            <button id="callBtn" class="w-full bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 text-sm">
+                <i class="fas fa-phone mr-2"></i>Call to Confirm Details
+            </button>
+        </div>
+    </div>
+</div>
+
+{% comment %} <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Función para inicializar eventos y lógica del modal
+        function initializeModalLogic() {
+            const closeModal = document.getElementById('closeModal');
+            const priceModal = document.getElementById('priceModal');
+    
+            if (closeModal && priceModal) {
+                // Evento para cerrar el modal al hacer clic en el botón de cerrar
+                closeModal.addEventListener('click', function () {
+                    priceModal.classList.add('hidden');
+                });
+    
+                // Evento para cerrar el modal al hacer clic fuera del modal
+                priceModal.addEventListener('click', function (e) {
+                    if (e.target === priceModal) {
+                        priceModal.classList.add('hidden');
+                    }
+                });
+            }
+        }
+    
+        // Inicializar lógica del modal al cargar la página
+        initializeModalLogic();
+    
+        // Reconfigurar lógica después de que HTMX actualice el DOM
+        document.body.addEventListener('htmx:afterSwap', (event) => {
+            if (event.target.id === 'priceModal') {
+                initializeModalLogic();
+            }
+        });
+    });
+</script> {% endcomment %}
