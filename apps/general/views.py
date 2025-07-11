@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect
-from apps.general.forms import ContactForm
+from apps.general.forms import ContactForm, ContactShortForm
 from django.http import JsonResponse
 from django.views import View
 from utils.osm_service import OSMService
 from django.core.mail import EmailMessage
-from moving_site.settings import EMAIL_HOST_USER
 from django.conf import settings
 from django.template.loader import render_to_string
 
@@ -18,7 +17,6 @@ def calculator_page(request):
 
 def contact_page(request):
     return render(request, 'contact.html')
-
 
 def send_quote(request):
     context = {}
@@ -102,8 +100,6 @@ class DistanceView(View):
             status=404
         )
         
-
-from apps.general.forms import ContactShortForm
 def send_mail(request):
     context = {}
     if request.method == 'POST':
@@ -143,6 +139,3 @@ def send_mail(request):
             context['form'] = form
     
     return render(request, 'components/contact_form.html', context)
-
-def exito(request):
-    return render(request, 'components/mail/success.html')

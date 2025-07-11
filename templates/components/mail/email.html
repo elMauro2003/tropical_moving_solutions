@@ -1,51 +1,76 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <title>New Contact Message</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
+            background-color: #f4f6f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: #333;
+            margin: 0;
+            padding: 30px 0;
         }
-        .email-container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            background-color: #f9f9f9;
+        .email-wrapper {
+            max-width: 640px;
+            margin: auto;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
         }
         .email-header {
+            background-color: #0077cc;
+            color: #fff;
+            padding: 30px 20px;
             text-align: center;
-            margin-bottom: 20px;
         }
-        .email-header h2 {
-            color: #007BFF;
+        .email-header h1 {
+            margin: 0;
+            font-size: 24px;
         }
         .email-body {
-            margin-bottom: 20px;
+            padding: 30px 20px;
+        }
+        .email-body p {
+            margin: 15px 0;
+            font-size: 16px;
+        }
+        .email-body strong {
+            color: #444;
         }
         .email-footer {
+            padding: 20px;
+            background-color: #f1f1f1;
             text-align: center;
-            font-size: 0.9em;
-            color: #666;
+            font-size: 14px;
+            color: #777;
+        }
+        .highlight-box {
+            background-color: #eef6fc;
+            border-left: 4px solid #0077cc;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
-    <div class="email-container">
+    <div class="email-wrapper">
         <div class="email-header">
-            <h2>New Contact Message</h2>
+            <h1>You've Received a New Contact Message</h1>
         </div>
         <div class="email-body">
             <p><strong>Name:</strong> {{ name }}</p>
             <p><strong>Email:</strong> {{ email }}</p>
             <p><strong>Date:</strong> {{ date }}</p>
             <p><strong>Message:</strong></p>
-            <p>{{ message }}</p>
+            <div class="highlight-box">
+                <p>{{ message }}</p>
+            </div>
         </div>
         <div class="email-footer">
-            <p>Thank you for contacting us!</p>
+            <p>We appreciate you getting in touch with us. We'll respond as soon as possible.</p>
         </div>
     </div>
 </body>

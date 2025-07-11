@@ -1,6 +1,16 @@
+<style>
+    #spinnerFilter {
+        display: none; /* Oculta el indicador por defecto */
+    }
+    
+    #spinnerFilter.htmx-request {
+        display: block; /* Muestra el indicador durante la solicitud */
+    }
+</style>
 <form id="movingCalculator" class="space-y-4" 
     hx-post="{% url 'send_quote' %}" 
-    hx-target="#calculator_form" >
+    hx-target="#calculator_form"
+    hx-indicator="#spinnerFilter">
     {% csrf_token %}
         <!-- Name Input -->
         <div>
@@ -164,11 +174,28 @@
 
         <!-- Calculate Button -->
         <div class="pt-3">
-            <button type="submit" id="calculateBtn" class="w-full bg-gradient-to-r from-accent to-orange-500 hover:from-orange-500 hover:to-red-500 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 text-sm">
+            {% comment %} <button type="submit" id="calculateBtn" class="w-full bg-gradient-to-r from-accent to-orange-500 hover:from-orange-500 hover:to-red-500 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 text-sm">
                 <i class="fas fa-calculator mr-2"></i>Calculate Moving Price
-            </button>
+            </button> {% endcomment %}
+
+
+            <button
+            type="submit"
+            id="submitButton"
+            class="w-full bg-gradient-to-r from-accent to-orange-500 hover:from-orange-500 hover:to-red-500 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 text-sm"
+        >
+            <div id="spinnerFilter" class="hidden">
+                <i class="fas fa-spinner fa-spin text-white"></i>
+            </div>
+            <span id="buttonIcon">
+                <i class="fas fa-calculator mr-2"></i>
+            </span>
+            <span id="buttonText" class="ml-2">Send Request</span>
+        </button>
+
         </div>
 
+        
         <script>
             
             document.addEventListener('DOMContentLoaded', () => {
@@ -283,4 +310,30 @@
         {% endif %}
 
     </form>
+
+
+    <!-- Script para el Spinner -->
+    <script>
+        document.addEventListener('htmx:beforeRequest', function (event) {
+            // Deshabilitar inputs y botón de submit
+            const form = event.target.closest('form');
+            form.querySelectorAll('input, textarea, button').forEach(el => el.disabled = true);
+    
+            // Mostrar el spinner y ocultar el ícono del botón
+            document.getElementById('spinnerFilter').classList.remove('hidden');
+            document.getElementById('buttonIcon').classList.add('hidden');
+            document.getElementById('buttonText').classList.add('hidden');
+        });
+    
+        document.addEventListener('htmx:afterRequest', function (event) {
+            // Habilitar inputs y botón de submit
+            const form = event.target.closest('form');
+            form.querySelectorAll('input, textarea, button').forEach(el => el.disabled = false);
+    
+            // Ocultar el spinner y mostrar el ícono del botón
+            document.getElementById('spinnerFilter').classList.add('hidden');
+            document.getElementById('buttonIcon').classList.remove('hidden');
+            document.getElementById('buttonText').classList.remove('hidden');
+        });
+    </script>
     
