@@ -144,6 +144,14 @@
         tomorrow.setDate(tomorrow.getDate() + 1);
         const tomorrowFormatted = tomorrow.toISOString().split('T')[0];
         document.getElementById('date').value = tomorrowFormatted;
+
+        // Close modal when clicking outside
+        priceModal.addEventListener('click', function(e) {
+            if (e.target === priceModal) {
+                priceModal.classList.add('hidden');
+            }
+        });
+
     </script>
 </body>
 </html>

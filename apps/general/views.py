@@ -39,9 +39,91 @@ def send_quote(request):
     return render(request, 'components/calculator_form.html', context)
 
 
+def send_mail_quote(request):
+    context = {}
+    service = OSMService()
+    distance = service.calculate_distance(
+        request.POST.get('origin'),
+        request.POST.get('destination')
+    )
+    if request.method == 'POST':
+        # Procesar datos
+        name = request.POST.get('name')
+        location = request.POST.get('location')
+        origin = request.POST.get('origin')
+        destination = request.POST.get('destination')
+        phone = request.POST.get('phone')
+        time = request.POST.get('time')
+        date = request.POST.get('date')
+        helpers = request.POST.get('helpers')
+        special_item = request.POST.get('special_item')
+        size = request.POST.get('size')
+        
+            
+        # Crear contenido del email (HTML)
+        context = {
+            'name': name,
+            'location': location,
+            'origin': origin,
+            'destination': destination,
+            'phone': phone,
+            'time': time,
+            'date': date,
+            'helpers': helpers,
+            'special_item': special_item,
+            'size': size,
+            'distance': distance,
+            'total_amount': _show_pricing(request, size).get('total_amount', 0),
+            'white_glove': _show_pricing(request, size).get('white_glove', 0),
+            'packing': _show_pricing(request, size).get('packing', 0),
+            
+        }
+        content = render_to_string('components/mail/email_quote.html', context)
+            
+        # Enviar email
+        email = EmailMessage(
+            f'Contact message from: {name}',
+            content,
+            settings.EMAIL_HOST_USER,
+            [settings.DESTINATARIO_EMAIL],
+        )
+        email.content_subtype = "html"  # Habilitar HTML
+        email.send()
+        context['tags'] = 'success'
+        context['tag_message'] = 'Mail sent successfully!'
+    
+    context['form'] = ''
+    return render(request, 'components/calculator_form.html', context)
+    
+    
+
 def partial_load(request):
+    
+    # Procesar datos
+    name = request.GET.get('name')
+    location = request.GET.get('location')
+    origin = request.GET.get('origin')
+    destination = request.GET.get('destination')
+    phone = request.GET.get('phone')
+    time = request.GET.get('time')
+    date = request.GET.get('date')
+    helpers = request.GET.get('helpers')
+    special_item = request.GET.get('special_item')
     size = request.GET.get('size')
+    
+    # Pasar al contexto
     context = _show_pricing(request, size)
+    context['name'] = name
+    context['location'] = location
+    context['origin'] = origin
+    context['destination'] = destination
+    context['phone'] = phone
+    context['time'] = time
+    context['date'] = date
+    context['helpers'] = helpers
+    context['special_item'] = special_item
+    context['size'] = size
+    
     return render(request, 'components/price_modal.html', context)
 
 def _show_pricing(request, size):

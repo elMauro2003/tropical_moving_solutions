@@ -141,7 +141,7 @@
     document.addEventListener('htmx:beforeRequest', function (event) {
         // Deshabilitar inputs y botón de submit
         const form = event.target.closest('form');
-        form.querySelectorAll('input, textarea, button').forEach(el => el.disabled = true);
+        form.querySelectorAll('input, textarea, button, select').forEach(el => el.disabled = true);
 
         // Mostrar el spinner y ocultar el ícono del botón
         document.getElementById('spinnerFilter').classList.remove('hidden');
@@ -152,7 +152,7 @@
     document.addEventListener('htmx:afterRequest', function (event) {
         // Habilitar inputs y botón de submit
         const form = event.target.closest('form');
-        form.querySelectorAll('input, textarea, button').forEach(el => el.disabled = false);
+        form.querySelectorAll('input, textarea, button, select').forEach(el => el.disabled = false);
 
         // Ocultar el spinner y mostrar el ícono del botón
         document.getElementById('spinnerFilter').classList.add('hidden');

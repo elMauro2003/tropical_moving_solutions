@@ -10,4 +10,5 @@ urlpatterns = [
     path('distance/', DistanceView.as_view(), name='distance_api'),
     path('partial-load/', partial_load, name='partial_load'),
     path('send-mail/', send_mail, name='send_mail'),
+    path('send-mail-quote/', send_mail_quote, name='send_mail_quote'),
 ]

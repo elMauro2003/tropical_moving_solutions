@@ -174,11 +174,6 @@
 
         <!-- Calculate Button -->
         <div class="pt-3">
-            {% comment %} <button type="submit" id="calculateBtn" class="w-full bg-gradient-to-r from-accent to-orange-500 hover:from-orange-500 hover:to-red-500 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 text-sm">
-                <i class="fas fa-calculator mr-2"></i>Calculate Moving Price
-            </button> {% endcomment %}
-
-
             <button
             type="submit"
             id="submitButton"
@@ -289,7 +284,7 @@
             hx-get="{% url 'partial_load' %}"
             hx-target="#priceModal"
             hx-trigger="load"
-            hx-include="[name='size']"
+            hx-include="[name='size'], [name='name'], [name='location'], [name='origin'], [name='destination'], [name='phone'], [name='time'], [name='date'], [name='helpers'], [name='special_item']"
             >
             </div>
 
@@ -308,32 +303,43 @@
                 });
             </script>
         {% endif %}
-
     </form>
 
 
     <!-- Script para el Spinner -->
     <script>
         document.addEventListener('htmx:beforeRequest', function (event) {
-            // Deshabilitar inputs y botón de submit
             const form = event.target.closest('form');
-            form.querySelectorAll('input, textarea, button').forEach(el => el.disabled = true);
-    
-            // Mostrar el spinner y ocultar el ícono del botón
-            document.getElementById('spinnerFilter').classList.remove('hidden');
-            document.getElementById('buttonIcon').classList.add('hidden');
-            document.getElementById('buttonText').classList.add('hidden');
+        
+            // Asegúrate de que el evento solo afecte al formulario correcto
+            if (form && form.id === 'movingCalculator') {
+                form.querySelectorAll('input, textarea, button').forEach(el => el.disabled = true);
+                document.getElementById('spinnerFilter').classList.remove('hidden');
+                document.getElementById('buttonIcon').classList.add('hidden');
+                document.getElementById('buttonText').classList.add('hidden');
+            } else if (form && form.id === 'priceModalForm') {
+                form.querySelectorAll('input, textarea, button').forEach(el => el.disabled = true);
+                document.getElementById('spinnerFilter2').classList.remove('hidden');
+                document.getElementById('buttonIcon2').classList.add('hidden');
+                document.getElementById('buttonText2').classList.add('hidden');
+            }
         });
-    
+        
         document.addEventListener('htmx:afterRequest', function (event) {
-            // Habilitar inputs y botón de submit
             const form = event.target.closest('form');
-            form.querySelectorAll('input, textarea, button').forEach(el => el.disabled = false);
-    
-            // Ocultar el spinner y mostrar el ícono del botón
-            document.getElementById('spinnerFilter').classList.add('hidden');
-            document.getElementById('buttonIcon').classList.remove('hidden');
-            document.getElementById('buttonText').classList.remove('hidden');
+        
+            // Asegúrate de que el evento solo afecte al formulario correcto
+            if (form && form.id === 'movingCalculator') {
+                form.querySelectorAll('input, textarea, button').forEach(el => el.disabled = false);
+                document.getElementById('spinnerFilter').classList.add('hidden');
+                document.getElementById('buttonIcon').classList.remove('hidden');
+                document.getElementById('buttonText').classList.remove('hidden');
+            } else if (form && form.id === 'priceModalForm') {
+                form.querySelectorAll('input, textarea, button').forEach(el => el.disabled = false);
+                document.getElementById('spinnerFilter2').classList.add('hidden');
+                document.getElementById('buttonIcon2').classList.remove('hidden');
+                document.getElementById('buttonText2').classList.remove('hidden');
+            }
         });
     </script>
     

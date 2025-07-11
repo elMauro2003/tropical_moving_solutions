@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Moving Reservation</title>
+    <style>
+        body {
+            background-color: #f4f6f8;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 30px 0;
+        }
+        .email-wrapper {
+            max-width: 640px;
+            margin: auto;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+        .email-header {
+            background-color: #0077cc;
+            color: #fff;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        .email-header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .email-body {
+            padding: 30px 20px;
+        }
+        .email-body p {
+            margin: 15px 0;
+            font-size: 16px;
+        }
+        .email-body strong {
+            color: #444;
+        }
+        .email-footer {
+            padding: 20px;
+            background-color: #f1f1f1;
+            text-align: center;
+            font-size: 14px;
+            color: #777;
+        }
+        .highlight-box {
+            background-color: #eef6fc;
+            border-left: 4px solid #0077cc;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-wrapper">
+        <div class="email-header">
+            <h1>New Moving Reservation</h1>
+        </div>
+        <div class="email-body">
+            <p><strong>Customer Name:</strong> {{ name }}</p>
+            <p><strong>Phone Number:</strong> {{ phone }}</p>
+            <p><strong>Pickup Address:</strong> {{ origin }}</p>
+            <p><strong>Destination Address:</strong> {{ destination }}</p>
+            <p><strong>Preferred Time:</strong> {{ time }}</p>
+            <p><strong>Moving Date:</strong> {{ date }}</p>
+            <p><strong>Home Size:</strong> {{ size }}</p>
+            <p><strong>Helpers Needed:</strong> {{ helpers }}</p>
+            <p><strong>Special Items:</strong> {{ special_item }}</p>
+            <p><strong>Location:</strong> {{ location }}</p>
+            <p><strong>Distance:</strong> {{ distance }} Miles</p>
+            <p><strong>Total amount:</strong> ${{ total_amount }}</p>
+            <p><strong>White Glove:</strong> ${{ white_glove }}</p>
+            <p><strong>Packing:</strong> ${{ packing }}</p>
+        </div>
+        <div class="email-footer">
+            <p>Thank you for using our moving services.</p>
+        </div>
+    </div>
+</body>
+</html>

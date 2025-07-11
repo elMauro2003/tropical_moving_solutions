@@ -27,6 +27,7 @@ class Contact(models.Model):
     origin = models.CharField(max_length=255, verbose_name="Dirección de recogida")
     destination = models.CharField(max_length=255, verbose_name="Dirección de destino")
     phone = models.CharField(max_length=15, verbose_name="Teléfono")
+    created_at = models.DateField(auto_now_add=True, null=True, blank=True)
     time = models.CharField(
         max_length=50,
         choices=[
