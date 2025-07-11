@@ -1,6 +1,9 @@
 from pathlib import Path
 from decouple import config
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,9 +31,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'tuemail@gmail.com'  # Tu dirección de Gmail
-EMAIL_HOST_PASSWORD = 'tucontraseña'  # Tu contraseña de Gmail o contraseña de aplicación
-DEFAULT_FROM_EMAIL = 'tuemail@gmail.com'  # Mismo que EMAIL_HOST_USER
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DESTINATARIO_EMAIL = os.getenv('DESTINATARIO_EMAIL')
 
 INSTALLED_APPS = [
     # BASE APPS

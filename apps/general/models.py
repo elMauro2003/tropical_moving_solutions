@@ -60,3 +60,15 @@ class Contact(models.Model):
     def __str__(self):
         return f"{self.name} - {self.date} - {self.origin} to {self.destination}"
     
+    
+class ContactShort(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Nombre")
+    email = models.EmailField(verbose_name="Correo electrónico")
+    date = models.DateField(verbose_name="Fecha")
+    message = models.CharField(max_length=500, verbose_name="Mensaje")
+    
+    # Representación del modelo
+    def __str__(self):
+        return f"{self.name} - {self.date} - {self.email}"
+    
+    

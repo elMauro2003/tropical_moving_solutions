@@ -1,5 +1,5 @@
 from django import forms
-from apps.general.models import Contact
+from apps.general.models import Contact, ContactShort
 
 class ContactForm(forms.ModelForm):
     class Meta:
@@ -44,3 +44,10 @@ class ContactForm(forms.ModelForm):
             raise forms.ValidationError("La opción seleccionada para artículos especiales no es válida.")
         
         return special_item
+    
+    
+class ContactShortForm(forms.ModelForm):
+    class Meta:
+        model = ContactShort
+        fields = ['name', 'email', 'date', 'message']
+    

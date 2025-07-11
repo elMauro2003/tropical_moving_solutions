@@ -1,8 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from apps.general.forms import ContactForm
 from django.http import JsonResponse
 from django.views import View
 from utils.osm_service import OSMService
+from django.core.mail import EmailMessage
+from moving_site.settings import EMAIL_HOST_USER
+from django.conf import settings
+from django.template.loader import render_to_string
 
 # Create your views here.
 
@@ -97,3 +101,48 @@ class DistanceView(View):
             {'error': 'Could not calculate distance for given locations'},
             status=404
         )
+        
+
+from apps.general.forms import ContactShortForm
+def send_mail(request):
+    context = {}
+    if request.method == 'POST':
+        form = ContactShortForm(request.POST)
+        if form.is_valid():
+            
+            # Procesar datos
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            date = form.cleaned_data['date']
+            message = form.cleaned_data['message']
+            
+            # Crear contenido del email (HTML)
+            context = {
+                'name': name,
+                'email': email,
+                'date': date,
+                'message': message,
+            }
+            content = render_to_string('components/mail/email.html', context)
+            
+            # Enviar email
+            email = EmailMessage(
+                f'Contact message from: {name}',
+                content,
+                settings.EMAIL_HOST_USER,
+                [settings.DESTINATARIO_EMAIL],
+            )
+            email.content_subtype = "html"  # Habilitar HTML
+            email.send()
+            context['tags'] = 'success'
+            context['tag_message'] = 'Mail sent successfully!'
+            context['form'] = ''
+        else:
+            context['tags'] = 'error'
+            context['tag_message'] = 'Something went wrong!'
+            context['form'] = form
+    
+    return render(request, 'components/contact_form.html', context)
+
+def exito(request):
+    return render(request, 'components/mail/success.html')

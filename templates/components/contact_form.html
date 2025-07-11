@@ -1,0 +1,162 @@
+<style>
+    #spinnerFilter {
+        display: none; /* Oculta el indicador por defecto */
+    }
+    
+    #spinnerFilter.htmx-request {
+        display: block; /* Muestra el indicador durante la solicitud */
+    }
+</style>
+<form class="space-y-6"
+    hx-post="{% url 'send_mail' %}" 
+    hx-target="#contact_form"
+    hx-indicator="#spinnerFilter">
+    {% csrf_token %}
+    <!-- Full Name -->
+    <div>
+        <label class="block text-gray-700 mb-2 font-medium" for="name">
+            Full Name
+        </label>
+        <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i class="fas fa-user text-gray-400"></i>
+            </div>
+            <input
+                type="text"
+                id="name"
+                name="name"
+                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg input-focus focus:outline-none focus:border-blue-500"
+                value="{% if form.name.value %}{{form.name.value}}{% endif %}"
+                placeholder="John Smith"
+                
+            >
+        </div>
+        {% if form.name.errors %}
+            <div class="text-red-600">{{ form.name.errors.0 }}</div>
+        {% endif %}
+    </div>
+    
+    <!-- Email -->
+    <div>
+        <label class="block text-gray-700 mb-2 font-medium" for="email">
+            Email Address
+        </label>
+        <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i class="fas fa-envelope text-gray-400"></i>
+            </div>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg input-focus focus:outline-none focus:border-blue-500"
+                value="{% if form.email.value %}{{form.email.value}}{% endif %}"
+                placeholder="john@example.com"
+                
+            >            
+        </div>
+        {% if form.email.errors %}
+            <div class="text-red-600">{{ form.email.errors.0 }}</div>
+        {% endif %}
+    </div>
+    
+    <!-- Estimated Date -->
+    <div>
+        <label class="block text-gray-700 mb-2 font-medium" for="date">
+            Estimated Moving Date
+        </label>
+        <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i class="fas fa-calendar-alt text-gray-400"></i>
+            </div>
+            <input
+                type="date"
+                id="date"
+                name="date"
+                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg input-focus focus:outline-none focus:border-blue-500"
+                value="{% if form.date.value %}{{form.date.value}}{% endif %}"
+            >
+        </div>
+        {% if form.date.errors %}
+            <div class="text-red-600">{{ form.date.errors.0 }}</div>
+        {% endif %}
+    </div>
+    
+    <!-- Additional Details -->
+    <div>
+        <label class="block text-gray-700 mb-2 font-medium" for="details">
+            Moving Details
+        </label>
+        <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 pt-3 pointer-events-none">
+                <i class="fas fa-edit text-gray-400"></i>
+            </div>
+            <textarea
+                id="details"
+                rows="4"
+                name="message"
+                class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg input-focus focus:outline-none focus:border-blue-500"
+                placeholder="Please provide details about your move (size of home, special items, etc.)"
+                value="{% if form.message.value %}{{form.message.value}}{% endif %}"
+            ></textarea>
+        </div>
+        {% if form.message.errors %}
+            <div class="text-red-600">{{ form.message.errors.0 }}</div>
+        {% endif %}
+    </div>
+    
+    <!-- Submit Button -->
+    <button
+        type="submit"
+        id="submitButton"
+        class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-4 px-4 rounded-lg transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl flex items-center justify-center"
+    >
+        <div id="spinnerFilter" class="hidden">
+            <i class="fas fa-spinner fa-spin text-white"></i>
+        </div>
+        <span id="buttonIcon">
+            <i class="fas fa-paper-plane"></i>
+        </span>
+        <span id="buttonText" class="ml-2">Send Request</span>
+    </button>
+    
+
+    {% if tag_message %}
+        <script>                
+            Swal.fire({
+                position: "top-center",
+                icon: '{% if "error" in tags %}error{% elif "success" in tags %}success{% elif "info" in tags %}info{% elif "warning" in tags %}warning{% else %}question{% endif %}',
+                title: "{{tag_message}}",
+                showConfirmButton: false,
+                timer: 3000
+            });
+            
+        </script>
+    {% endif %}
+
+</form>
+
+
+<script>
+    document.addEventListener('htmx:beforeRequest', function (event) {
+        // Deshabilitar inputs y botón de submit
+        const form = event.target.closest('form');
+        form.querySelectorAll('input, textarea, button').forEach(el => el.disabled = true);
+
+        // Mostrar el spinner y ocultar el ícono del botón
+        document.getElementById('spinnerFilter').classList.remove('hidden');
+        document.getElementById('buttonIcon').classList.add('hidden');
+        document.getElementById('buttonText').classList.add('hidden');
+    });
+
+    document.addEventListener('htmx:afterRequest', function (event) {
+        // Habilitar inputs y botón de submit
+        const form = event.target.closest('form');
+        form.querySelectorAll('input, textarea, button').forEach(el => el.disabled = false);
+
+        // Ocultar el spinner y mostrar el ícono del botón
+        document.getElementById('spinnerFilter').classList.add('hidden');
+        document.getElementById('buttonIcon').classList.remove('hidden');
+        document.getElementById('buttonText').classList.remove('hidden');
+    });
+</script>
