@@ -280,6 +280,9 @@
             </script>
         {% elif tag_message  == "Quote Sent Successfully!" %}
 
+            <script>
+                priceModal.classList.remove('hidden');
+            </script>
             <div
             hx-get="{% url 'partial_load' %}"
             hx-target="#priceModal"
@@ -287,11 +290,38 @@
             hx-include="[name='size'], [name='name'], [name='location'], [name='origin'], [name='destination'], [name='phone'], [name='time'], [name='date'], [name='helpers'], [name='special_item']"
             >
             </div>
-
             <script>
+                document.body.addEventListener('htmx:afterSwap', function (event) {
+                    // Verifica si el contenido cargado es el modal
+                    if (event.target.id === 'priceModal') {
+                        const priceModal = document.getElementById('priceModal');
+                        const closeModal = document.getElementById('closeModal');
+                
+                        // Asegúrate de que el modal no esté oculto
+                        priceModal.classList.remove('hidden');
+                
+                        // Evento para cerrar el modal al hacer clic en el botón de cierre
+                        closeModal.addEventListener('click', function () {
+                            priceModal.classList.add('hidden');
+                        });
+                
+                        // Evento para cerrar el modal al hacer clic fuera del contenido
+                        priceModal.addEventListener('click', function (e) {
+                            if (e.target === priceModal) {
+                                priceModal.classList.add('hidden');
+                            }
+                        });
+                    }
+                });
+            </script>
+            {% comment %} <script>
+                const closeModal = document.getElementById('closeModal');
+                const priceModal = document.getElementById('priceModal');
+                console.log('Close Modal Element: ', closeModal);
                 priceModal.classList.remove('hidden');
 
                 closeModal.addEventListener('click', function() {
+                    console.log('CLose ')
                     priceModal.classList.add('hidden');
                 });
                 
@@ -301,8 +331,9 @@
                         priceModal.classList.add('hidden');
                     }
                 });
-            </script>
+            </script> {% endcomment %}
         {% endif %}
+
     </form>
 
 

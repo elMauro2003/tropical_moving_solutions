@@ -1,83 +1,248 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Moving Reservation</title>
     <style>
-        body {
-            background-color: #f4f6f8;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333;
+        * {
             margin: 0;
-            padding: 30px 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .email-wrapper {
-            max-width: 640px;
-            margin: auto;
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        
+        body {
+            background-color: #f0f8ff;
+            padding: 20px;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             overflow: hidden;
         }
-        .email-header {
-            background-color: #0077cc;
-            color: #fff;
-            padding: 30px 20px;
+        
+        .header {
+            background: #3498db;
+            padding: 25px;
             text-align: center;
+            color: white;
         }
-        .email-header h1 {
-            margin: 0;
-            font-size: 24px;
+        
+        .header h1 {
+            font-size: 28px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
-        .email-body {
-            padding: 30px 20px;
+        
+        .reservation-details {
+            padding: 30px;
         }
-        .email-body p {
-            margin: 15px 0;
-            font-size: 16px;
+        
+        .section {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #e0e0e0;
         }
-        .email-body strong {
-            color: #444;
+        
+        .section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
         }
-        .email-footer {
+        
+        .section-title {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #3498db;
+            font-size: 20px;
+        }
+        
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .detail-item {
+            margin-bottom: 15px;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #3498db;
+            margin-bottom: 5px;
+            display: block;
+        }
+        
+        .detail-value {
+            background: #f9f9f9;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 4px solid #2ecc71;
+        }
+        
+        .highlight {
+            border-left-color: #e67e22;
+        }
+        
+        .total-section {
+            background: #f8f9fa;
             padding: 20px;
-            background-color: #f1f1f1;
-            text-align: center;
-            font-size: 14px;
-            color: #777;
+            border-radius: 8px;
+            margin-top: 20px;
+            border: 2px dashed #3498db;
         }
-        .highlight-box {
-            background-color: #eef6fc;
-            border-left: 4px solid #0077cc;
+        
+        .total-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .total-item {
+            text-align: center;
             padding: 15px;
-            margin-top: 10px;
-            border-radius: 4px;
+            border-radius: 8px;
+            background: white;
+        }
+        
+        .total-label {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+        }
+        
+        .total-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #2c3e50;
+            color: #ecf0f1;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 600px) {
+            .details-grid, .total-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 22px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="email-wrapper">
-        <div class="email-header">
-            <h1>New Moving Reservation</h1>
+    <div class="container">
+        <div class="header">
+            <h1>NEW MOVING RESERVATION</h1>
         </div>
-        <div class="email-body">
-            <p><strong>Customer Name:</strong> {{ name }}</p>
-            <p><strong>Phone Number:</strong> {{ phone }}</p>
-            <p><strong>Pickup Address:</strong> {{ origin }}</p>
-            <p><strong>Destination Address:</strong> {{ destination }}</p>
-            <p><strong>Preferred Time:</strong> {{ time }}</p>
-            <p><strong>Moving Date:</strong> {{ date }}</p>
-            <p><strong>Home Size:</strong> {{ size }}</p>
-            <p><strong>Helpers Needed:</strong> {{ helpers }}</p>
-            <p><strong>Special Items:</strong> {{ special_item }}</p>
-            <p><strong>Location:</strong> {{ location }}</p>
-            <p><strong>Distance:</strong> {{ distance }} Miles</p>
-            <p><strong>Total amount:</strong> ${{ total_amount }}</p>
-            <p><strong>White Glove:</strong> ${{ white_glove }}</p>
-            <p><strong>Packing:</strong> ${{ packing }}</p>
-        </div>
-        <div class="email-footer">
-            <p>Thank you for using our moving services.</p>
+        
+        <div class="reservation-details">
+            <div class="section">
+                <h2 class="section-title">Customer Information</h2>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Customer Name</span>
+                        <div class="detail-value">{{name}}</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Phone Number</span>
+                        <div class="detail-value">{{phone}}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">Moving Details</h2>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Pickup Address</span>
+                        <div class="detail-value">{{origin}}</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Destination Address</span>
+                        <div class="detail-value">{{destination}}</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Preferred Time</span>
+                        <div class="detail-value">{{time}}</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Moving Date</span>
+                        <div class="detail-value">{{date}}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">Service Requirements</h2>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Home Size</span>
+                        <div class="detail-value">{{size}}</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Helpers Needed</span>
+                        <div class="detail-value">{{helpers}}</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Special Items</span>
+                        <div class="detail-value">{{special_item}}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">Route Information</h2>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Location</span>
+                        <div class="detail-value">{{location}}</div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Distance</span>
+                        <div class="detail-value">{{distance}} miles</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="total-section">
+                <div class="total-grid">
+                    <div class="total-item">
+                        <div class="total-label">White Glove</div>
+                        <div class="total-value">${{white_glove}}.0</div>
+                    </div>
+                    <div class="total-item">
+                        <div class="total-label">Packing</div>
+                        <div class="total-value">${{packing}}.0</div>
+                    </div>
+                    <div class="total-item">
+                        <div class="total-label">Total Amount</div>
+                        <div class="total-value">${{total_amount}}</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
