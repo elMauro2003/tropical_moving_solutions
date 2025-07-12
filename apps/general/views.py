@@ -25,12 +25,25 @@ def send_quote(request):
         request.POST.get('origin'),
         request.POST.get('destination')
     )
+    print(f'Distance: {distance}')
+    
     if request.method == 'POST':
         form = ContactForm(request.POST)
+        
+        # Verificando si la alguna ruta es invalida dentro de Miami
+        if distance is None:
+            context['tags'] = 'error'
+            context['tag_message'] = 'Make sure you entered a valid origin and destination inside Miami!'
+            context['form'] = form
+            return render(request, 'components/calculator_form.html', context)
+        
         if form.is_valid() and distance <= 55.00:
             context['tags'] = 'success'
             context['tag_message'] = 'Quote Sent Successfully!'
             context['message'] = 'Quote Sent Successfully!'
+        elif distance >= 55.00:
+            context['tags'] = 'error'
+            context['tag_message'] = 'Distance can only be lower than 50 miles!'
         else:
             context['tags'] = 'error'
             context['tag_message'] = 'Something went wrong!'

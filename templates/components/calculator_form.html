@@ -54,7 +54,7 @@
                 <label for="origin" class="block text-base font-medium text-gray-700 mb-1">
                     <i class="fas fa-home text-primary mr-2 text-sm"></i>Pickup Address
                 </label>
-                <input type="text" id="origin" name="origin" placeholder="Current address" class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" value="{{ form.origin.value|default:'' }}">
+                <input type="text" id="origin" name="origin" placeholder="1400 NW 7th St, Miami, FL 33125" class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" value="{{ form.origin.value|default:'' }}">
                 {% if form.origin.errors %}
                     <div class="text-red-600">{{ form.origin.errors.0 }}</div>
                 {% endif %}
@@ -63,7 +63,7 @@
                 <label for="destination" class="block text-base font-medium text-gray-700 mb-1">
                     <i class="fas fa-flag-checkered text-secondary mr-2 text-sm"></i>Destination Address
                 </label>
-                <input type="text" id="destination" name="destination" placeholder="New address" class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" value="{{ form.destination.value|default:'' }}">
+                <input type="text" id="destination" name="destination" placeholder="1200 Brickell Ave, Miami, 33131" class="w-full p-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent" value="{{ form.destination.value|default:'' }}">
                 {% if form.destination.errors %}
                     <div class="text-red-600">{{ form.destination.errors.0 }}</div>
                 {% endif %}
@@ -267,7 +267,7 @@
         </script>
 
 
-        {% if tag_message  == "Something went wrong!" or tag_message  == "Mail sent successfully!" %}
+        {% if tag_message  == "Something went wrong!" or tag_message  == "Mail sent successfully!" or tag_message  == "Distance can only be lower than 50 miles!" or tag_message == "Make sure you entered a valid origin and destination inside Miami!" %}
             <script>                
                 Swal.fire({
                     position: "top-center",
@@ -281,8 +281,13 @@
         {% elif tag_message  == "Quote Sent Successfully!" %}
             
             <script>
-                priceModal.classList.remove('hidden');
+                // Solo mostrar el modal, no inicializar eventos aquí
+                document.getElementById('priceModal').classList.remove('hidden');
             </script>
+            
+            {% comment %} <script>
+                priceModal.classList.remove('hidden');
+            </script> {% endcomment %}
             <div
             hx-get="{% url 'partial_load' %}"
             hx-target="#priceModal"
@@ -290,7 +295,29 @@
             hx-include="[name='size'], [name='name'], [name='location'], [name='origin'], [name='destination'], [name='phone'], [name='time'], [name='date'], [name='helpers'], [name='special_item']"
             >
             </div>
+
+            <!-- En calculator.html antes de cerrar </body> -->
             <script>
+                // Función para cerrar el modal
+                function closePriceModal() {
+                document.getElementById('priceModal').classList.add('hidden');
+                }
+            
+                // Delegación de eventos para cerrar el modal
+                document.body.addEventListener('click', function(e) {
+                // Cerrar al hacer clic en el botón
+                if (e.target.closest('#closeModal')) {
+                    closePriceModal();
+                }
+                
+                // Cerrar al hacer clic fuera del contenido
+                if (e.target.id === 'priceModal') {
+                    closePriceModal();
+                }
+                });
+            </script>
+
+            {% comment %} <script>
                 document.body.addEventListener('htmx:afterSwap', function (event) {
                     // Verifica si el contenido cargado es el modal
                     if (event.target.id === 'priceModal') {
@@ -313,7 +340,7 @@
                         });
                     }
                 });
-            </script>
+            </script> {% endcomment %}
         {% endif %}
 
     </form>
