@@ -1,2 +1,17 @@
+asgiref==3.9.1
+certifi==2025.7.9
+charset-normalizer==3.4.2
 Django==5.2.1
+dotenv==0.9.9
+geographiclib==2.0
+geopy==2.4.1
+idna==3.10
+Levenshtein==0.27.1
 python-decouple==3.8
+python-dotenv==1.1.1
+python-Levenshtein==0.27.1
+RapidFuzz==3.13.0
+requests==2.32.4
+sqlparse==0.5.3
+tzdata==2025.2
+urllib3==2.5.0
