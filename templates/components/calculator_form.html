@@ -267,7 +267,7 @@
         </script>
 
 
-        {% if tag_message  == "Something went wrong!" %}
+        {% if tag_message  == "Something went wrong!" or tag_message  == "Mail sent successfully!" %}
             <script>                
                 Swal.fire({
                     position: "top-center",
@@ -279,7 +279,7 @@
                 
             </script>
         {% elif tag_message  == "Quote Sent Successfully!" %}
-
+            
             <script>
                 priceModal.classList.remove('hidden');
             </script>
