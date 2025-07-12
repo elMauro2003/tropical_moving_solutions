@@ -314,24 +314,6 @@
                     }
                 });
             </script>
-            {% comment %} <script>
-                const closeModal = document.getElementById('closeModal');
-                const priceModal = document.getElementById('priceModal');
-                console.log('Close Modal Element: ', closeModal);
-                priceModal.classList.remove('hidden');
-
-                closeModal.addEventListener('click', function() {
-                    console.log('CLose ')
-                    priceModal.classList.add('hidden');
-                });
-                
-                // Close modal when clicking outside
-                priceModal.addEventListener('click', function(e) {
-                    if (e.target === priceModal) {
-                        priceModal.classList.add('hidden');
-                    }
-                });
-            </script> {% endcomment %}
         {% endif %}
 
     </form>
