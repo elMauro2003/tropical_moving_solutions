@@ -207,3 +207,41 @@
     border-radius: 3px;
     z-index: -1;
 }
+
+.responsive-container {
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        .mobile-menu {
+            display: flex;
+            overflow-x: auto;
+            padding-bottom: 12px;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .mobile-menu::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .info-card {
+            transition: all 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-only {
+                display: block;
+            }
+            .desktop-only {
+                display: none;
+            }
+        }
+        
+        @media (min-width: 769px) {
+            .mobile-only {
+                display: none;
+            }
+            .desktop-only {
+                display: block;
+            }
+        }
