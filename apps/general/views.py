@@ -25,7 +25,6 @@ def send_quote(request):
         request.POST.get('origin'),
         request.POST.get('destination')
     )
-    print(f'Distance: {distance}')
     
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -60,50 +59,54 @@ def send_mail_quote(request):
         request.POST.get('destination')
     )
     if request.method == 'POST':
-        # Procesar datos
-        name = request.POST.get('name')
-        location = request.POST.get('location')
-        origin = request.POST.get('origin')
-        destination = request.POST.get('destination')
-        phone = request.POST.get('phone')
-        time = request.POST.get('time')
-        date = request.POST.get('date')
-        helpers = request.POST.get('helpers')
-        special_item = request.POST.get('special_item')
-        size = request.POST.get('size')
-        
+        try:
+            # Procesar datos
+            name = request.POST.get('name')
+            location = request.POST.get('location')
+            origin = request.POST.get('origin')
+            destination = request.POST.get('destination')
+            phone = request.POST.get('phone')
+            time = request.POST.get('time')
+            date = request.POST.get('date')
+            helpers = request.POST.get('helpers')
+            special_item = request.POST.get('special_item')
+            size = request.POST.get('size')
             
-        # Crear contenido del email (HTML)
-        context = {
-            'name': name,
-            'location': location,
-            'origin': origin,
-            'destination': destination,
-            'phone': phone,
-            'time': time,
-            'date': date,
-            'helpers': helpers,
-            'special_item': special_item,
-            'size': size,
-            'distance': distance,
-            'total_amount': _show_pricing(request, size).get('total_amount', 0),
-            'white_glove': _show_pricing(request, size).get('white_glove', 0),
-            'packing': _show_pricing(request, size).get('packing', 0),
-            
-        }
-        content = render_to_string('components/mail/email_quote.html', context)
-            
-        # Enviar email
-        email = EmailMessage(
-            f'Contact message from: {name}',
-            content,
-            settings.EMAIL_HOST_USER,
-            [settings.DESTINATARIO_EMAIL],
-        )
-        email.content_subtype = "html"  # Habilitar HTML
-        email.send()
-        context['tags'] = 'success'
-        context['tag_message'] = 'Mail sent successfully!'
+                
+            # Crear contenido del email (HTML)
+            context = {
+                'name': name,
+                'location': location,
+                'origin': origin,
+                'destination': destination,
+                'phone': phone,
+                'time': time,
+                'date': date,
+                'helpers': helpers,
+                'special_item': special_item,
+                'size': size,
+                'distance': distance,
+                'total_amount': _show_pricing(request, size).get('total_amount', 0),
+                'white_glove': _show_pricing(request, size).get('white_glove', 0),
+                'packing': _show_pricing(request, size).get('packing', 0),
+                
+            }
+            content = render_to_string('components/mail/email_quote.html', context)
+                
+            # Enviar email
+            email = EmailMessage(
+                f'Contact message from: {name}',
+                content,
+                settings.EMAIL_HOST_USER,
+                [settings.DESTINATARIO_EMAIL],
+            )
+            email.content_subtype = "html"  # Habilitar HTML
+            email.send()
+            context['tags'] = 'success'
+            context['tag_message'] = 'Quote sent successfully!'
+        except Exception as e:
+                context['tags'] = 'error'
+                context['tag_message'] = f'Error: {str(e)}'
     
     context['form'] = ''
     return render(request, 'components/calculator_form.html', context)
@@ -195,42 +198,48 @@ class DistanceView(View):
             status=404
         )
         
+
+import os
 def send_mail(request):
     context = {}
     if request.method == 'POST':
         form = ContactShortForm(request.POST)
         if form.is_valid():
-            
-            # Procesar datos
-            name = form.cleaned_data['name']
-            email = form.cleaned_data['email']
-            date = form.cleaned_data['date']
-            message = form.cleaned_data['message']
-            
-            # Crear contenido del email (HTML)
-            context = {
-                'name': name,
-                'email': email,
-                'date': date,
-                'message': message,
-            }
-            content = render_to_string('components/mail/email.html', context)
-            
-            # Enviar email
-            email = EmailMessage(
-                f'Contact message from: {name}',
-                content,
-                settings.EMAIL_HOST_USER,
-                [settings.DESTINATARIO_EMAIL],
-            )
-            email.content_subtype = "html"  # Habilitar HTML
-            email.send()
-            context['tags'] = 'success'
-            context['tag_message'] = 'Mail sent successfully!'
-            context['form'] = ''
+            try:
+                name = form.cleaned_data['name']
+                email = form.cleaned_data['email']
+                date = form.cleaned_data['date']
+                message = form.cleaned_data['message']
+
+                # Crear contenido del email (HTML)
+                context = {
+                    'name': name,
+                    'email': email,
+                    'date': date,
+                    'message': message,
+                }
+                content = render_to_string('components/mail/email.html', context)
+
+                # Enviar email con EmailMessage (forma correcta)
+                email_msg = EmailMessage(
+                    f'Contact message from: {name}',
+                    content,
+                    settings.EMAIL_HOST_USER,
+                    [settings.DESTINATARIO_EMAIL],
+                )
+                email_msg.content_subtype = "html"
+                email_msg.send()  # No se usa fail_silently aquí
+
+                context['tags'] = 'success'
+                context['tag_message'] = 'Message delivered successfully!'
+            except Exception as e:
+                context['tags'] = 'error'
+                context['tag_message'] = f'Error sending email: {str(e)}'
         else:
             context['tags'] = 'error'
-            context['tag_message'] = 'Something went wrong!'
-            context['form'] = form
-    
+            context['tag_message'] = 'Form is not valid!'
+    if form.errors:
+        context['form'] = form
+    else:
+        context['form'] = ''
     return render(request, 'components/contact_form.html', context)

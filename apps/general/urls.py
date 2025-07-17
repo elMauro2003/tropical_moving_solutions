@@ -1,6 +1,5 @@
 from django.urls import path, include
-#from apps.general.views import index, calculator_page, contact_page, send_quote, DistanceView, partial_load
-from apps.general.views import *
+from apps.general.views import index, calculator_page, contact_page, send_quote, DistanceView, partial_load, send_mail, send_mail_quote
 
 urlpatterns = [
     path('', index, name='index'),

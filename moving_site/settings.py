@@ -1,9 +1,6 @@
 from pathlib import Path
-from decouple import config
 from dotenv import load_dotenv
 import os
-
-load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -16,15 +13,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-kl%14m#s@#)(8s@6vv4*0=h0c#!tw$4_2*orm(*t&0caw7cp2r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+ALLOWED_HOSTS = ['*']
 
-LIST_ALLOWED_HOSTS = config('ALLOWED_HOSTS',default='*')
-ALLOWED_HOSTS = LIST_ALLOWED_HOSTS.split(",")
+DEBUG = True
 
 LOGIN_REDIRECT_URL = '/'
 
 # Application definition
 
+dotenv_path = BASE_DIR / '.env'
+load_dotenv(dotenv_path)
 
 # Configuración de email para Gmail
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -81,24 +79,11 @@ WSGI_APPLICATION = 'moving_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-ALTERNATIVE_DBS = {
-    "postgres": {
-        "ENGINE": config("ENGINE",default="django.db.backends.postgresql"),
-        "NAME": config("DB_NAME", default="postgres"),
-        "USER": config("DB_USER", default="postgres"),
-        "PASSWORD": config("DB_PASSWORD", default="postgres"),
-        "HOST": config("DB_HOST", default="127.0.0.1"),
-        "PORT": config("DB_PORT", default=5432),
-    },
-    
-    'sqlite3': {
+DATABASES = {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
-}
-
-DATABASES = {
-    "default": ALTERNATIVE_DBS[config("USERDB", default="sqlite3")],
 }
 
 CACHES = {
@@ -142,7 +127,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+#STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -150,14 +135,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = '/static/'
-if DEBUG:
-    STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
-else:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-    
-MEDIA_URL = '/media/'
-MEDIA_ROOT = config("MEDIA_ROOT",default=f"{BASE_DIR}/media")
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
 
 AUTH_USER_MODEL = 'general.CustomUser'
