@@ -4,9 +4,7 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class CustomUser(AbstractUser):
-    # Agrega campos adicionales aquí si es necesario
     pass
-
 
 class CachedLocation(models.Model):
     query = models.CharField(max_length=255, db_index=True)

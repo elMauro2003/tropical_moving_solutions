@@ -12,11 +12,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-kl%14m#s@#)(8s@6vv4*0=h0c#!tw$4_2*orm(*t&0caw7cp2r'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-ALLOWED_HOSTS = ['*']
-
-DEBUG = True
-
 LOGIN_REDIRECT_URL = '/'
 
 # Application definition
@@ -24,14 +19,19 @@ LOGIN_REDIRECT_URL = '/'
 dotenv_path = BASE_DIR / '.env'
 load_dotenv(dotenv_path)
 
-# Configuración de email para Gmail
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+DEBUG = os.getenv('DEBUG', default=False)
+
+LIST_ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', default='*')
+ALLOWED_HOSTS = LIST_ALLOWED_HOSTS.split(",")
+
+# Configuración de email
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
+EMAIL_HOST = os.getenv('EMAIL_HOST', default='smtp.gmail.com')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-DESTINATARIO_EMAIL = os.getenv('DESTINATARIO_EMAIL')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', default='sourcemail@gmail.com')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', default='your-password')
+DESTINATARIO_EMAIL = os.getenv('DESTINATARIO_EMAIL', default='destinymail@gmail.com')
 
 INSTALLED_APPS = [
     # BASE APPS
@@ -79,12 +79,28 @@ WSGI_APPLICATION = 'moving_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
+
+ALTERNATIVE_DBS = {
+    # Para este proyecto por defecto uso MySQL
+    "mysql": {
+        "ENGINE": os.getenv("ENGINE",default="django.db.backends.mysql"),
+        "NAME": os.getenv("DB_NAME", default="mysql"),
+        "USER": os.getenv("DB_USER", default="mysql"),
+        "PASSWORD": os.getenv("DB_PASSWORD", default="mysql"),
+        "HOST": os.getenv("DB_HOST", default="127.0.0.1"),
+        "PORT": os.getenv("DB_PORT", default=3306), # MySQL default port on pythonanywhere
+    },
+    
+    'sqlite3': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+DATABASES = {
+    "default": ALTERNATIVE_DBS[os.getenv("USERDB", default="sqlite3")],
+}
+
 
 CACHES = {
     'default': {

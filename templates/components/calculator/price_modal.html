@@ -7,7 +7,8 @@
         display: block; /* Muestra el indicador durante la solicitud */
     }
 </style>
-<form id="priceModalForm" hx-post="{% url 'send_mail_quote' %}" 
+<form id="priceModalForm" 
+    hx-post="{% url 'calculator_send_mail_quote' %}" 
     hx-target="#calculator_form"
     hx-indicator="#spinnerFilter2"
     hx-include="[name='size'], [name='name'], [name='location'], [name='origin'], [name='destination'], [name='phone'], [name='time'], [name='date'], [name='helpers'], [name='special_item']" >

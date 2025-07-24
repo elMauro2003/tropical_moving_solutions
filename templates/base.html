@@ -1,15 +1,19 @@
 {% load static %}
 <!DOCTYPE html>
 
-<html lang="es" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
+  <meta name="author" content="elMauro2003 __ Ebrick Martinez">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Landing Page - Mudanzas Tropicales</title>
+  <meta name="title" content="Tropical Moving Solutions - Relocation and moving services">
+  <meta name="description" content="Website for making the perfect moving or relocation service." />
+  <meta name="keywords" content="moving -relocation -movers -packing -storage -transportation -logistics -loading -unloading -heavy lifting -furniture assembly -professional moving services -residential moving -commercial moving -long distance moving -local moving -packing supplies -moving truck rentals -moving insurance -packing and crating -moving checklist -moving tips -moving estimates -moving company -moving and storage company -moving and packing company -moving and logistics company -moving and transportation company -moving and heavy lifting company -moving and furniture assembly company -moving and professional services company -moving and residential services company -moving and commercial services company -moving and long distance services company -moving and local services company -moving and packing supplies company -moving and moving truck rentals company -moving and moving insurance company -moving and packing and crating company -moving and moving checklist company -moving and moving tips company -moving and moving estimates company -moving and relocation services company
+  moving, relocation, movers, packing, storage, transportation, logistics, moving trucks, packing supplies, moving boxes, moving services, moving and storage, moving company, long distance moving, local moving, household moving, commercial moving, office moving, piano moving, furniture moving, fragile items, packing and crating, loading and unloading, moving insurance, moving estimates, moving checklist, moving tips, moving and packing. moving, relocation, movers, packing, storage, transportation, logistics, moving trucks, packing supplies, moving boxes, moving services, moving and storage, moving company, long distance moving, local moving, household moving, commercial moving, office moving, piano moving, furniture moving, fragile items, packing and crating, loading and unloading, moving insurance, moving estimates, moving checklist, moving tips, moving and packing">
+  <title>Tropical Moving Solutions - Relocation and Moving Services</title>
   <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-  {% comment %} <link rel="stylesheet" href="{% static 'css/output.css' %}" /> {% endcomment %}
   <link rel="stylesheet" href="{% static 'css/customStyles.css' %}">
-  <link rel="icon" href="{% static 'logo.jpg' %}">
+  <link rel="icon" type="image/jpg" href="{% static 'logo.jpg' %}">
   <link href="{% static 'css/aos.css' %}" rel="stylesheet">
   <script src="{% static 'js/aos.js' %}"></script>
   <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
@@ -22,22 +26,22 @@
 <body>
 
     <!-- Navbar -->
-    {% include "components/navbar.html" %}
+    {% include "components/landing/navbar/navbar.html" %}
 
     <!-- Hero Section -->
-    {% include "components/hero.html" %}
+    {% include "components/landing/hero/hero.html" %}
 
     <!--About us-->
-    {% include "components/about.html" %}
+    {% include "components/landing/about/about.html" %}
 
     <!--Pricing -->
-    {% include "components/pricing.html" %}
+    {% include "components/landing/pricing/pricing.html" %}
 
     <!--Testimony session-->
-    {% include "components/testimony.html" %}
+    {% include "components/landing/testimony/testimony.html" %}
 
     <!-- Footer -->
-    {% include "components/footer.html" %}
+    {% include "components/landing/footer/footer.html" %}
 
     <script src="{% static 'js/mainScript.js' %}"></script>
     <script>AOS.init();</script>

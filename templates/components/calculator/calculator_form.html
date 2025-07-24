@@ -8,7 +8,7 @@
     }
 </style>
 <form id="movingCalculator" class="space-y-4" 
-    hx-post="{% url 'send_quote' %}" 
+    hx-post="{% url 'check_quote_validation' %}" 
     hx-target="#calculator_form"
     hx-indicator="#spinnerFilter">
     {% csrf_token %}
@@ -266,8 +266,7 @@
     
         </script>
 
-
-        {% if tag_message  == "Something went wrong!" or tag_message  == "Quote sent successfully!" or tag_message  == "Distance can only be lower than 50 miles!" or tag_message == "Make sure you entered a valid origin and destination inside Miami!" %}
+        {% if tag_message %}
             <script>                
                 Swal.fire({
                     position: "top-center",
@@ -276,23 +275,21 @@
                     showConfirmButton: false,
                     timer: 3000
                 });
-                
             </script>
-        {% elif tag_message  == "Quote Sent Successfully!" %}
+        {% endif %}
+
+        {% if tag_message  == "Quote validated successfully!" %}
             
             <script>
                 // Solo mostrar el modal, no inicializar eventos aquí
                 document.getElementById('priceModal').classList.remove('hidden');
             </script>
             
-            {% comment %} <script>
-                priceModal.classList.remove('hidden');
-            </script> {% endcomment %}
             <div
-            hx-get="{% url 'partial_load' %}"
+            hx-get="{% url 'calculator_show_price_modal' %}"
             hx-target="#priceModal"
             hx-trigger="load"
-            hx-include="[name='size'], [name='name'], [name='location'], [name='origin'], [name='destination'], [name='phone'], [name='time'], [name='date'], [name='helpers'], [name='special_item']"
+            hx-include="[name='size'], [name='name'], [name='location'], [name='origin'], [name='destination'], [name='phone'], [name='time'], [name='date'], [name='helpers'], [name='special_item'], [distance='distance']"
             >
             </div>
 
@@ -316,31 +313,6 @@
                 }
                 });
             </script>
-
-            {% comment %} <script>
-                document.body.addEventListener('htmx:afterSwap', function (event) {
-                    // Verifica si el contenido cargado es el modal
-                    if (event.target.id === 'priceModal') {
-                        const priceModal = document.getElementById('priceModal');
-                        const closeModal = document.getElementById('closeModal');
-                
-                        // Asegúrate de que el modal no esté oculto
-                        priceModal.classList.remove('hidden');
-                
-                        // Evento para cerrar el modal al hacer clic en el botón de cierre
-                        closeModal.addEventListener('click', function () {
-                            priceModal.classList.add('hidden');
-                        });
-                
-                        // Evento para cerrar el modal al hacer clic fuera del contenido
-                        priceModal.addEventListener('click', function (e) {
-                            if (e.target === priceModal) {
-                                priceModal.classList.add('hidden');
-                            }
-                        });
-                    }
-                });
-            </script> {% endcomment %}
         {% endif %}
 
     </form>

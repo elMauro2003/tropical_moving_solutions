@@ -1,0 +1,23 @@
+/* TEAM */
+
+    <Tropical Moving Solutions>
+
+    CEO: <Anthony Diaz>
+
+    CTO/Backend: <Mauricio J. Avalo Tamayo>
+    Site: <http://localhost:8000>
+    Mastodon: @<elMauro2003>
+    X: @<elMauro2003>
+    From: <Cienfuegos>, <Cuba>
+
+    Graphic and UI/UX designer: <Mauricio J. Avalo Tamayo>
+
+    Frontend Developer and Web designer: <Mauricio J. Avalo Tamayo>
+
+/* SITE */
+
+    Last update: 
+    Language:  English
+    Standards: HTML5, CSS3, JS
+    Components: Django
+    IDE: VSCode

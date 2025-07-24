@@ -16,9 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from apps.general.views.seo_views import humans, robots, security
+from apps.general.views.site_map import sitemap
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('apps.general.urls'))
+    path('', include('apps.general.urls')),
+    path("robots.txt", robots, name="robots"),
+    path("security.txt", security, name="security"),
+    path("humans.txt", humans, name="humans"),
+    path("sitemap.txt", sitemap, name="sitemap"),
 ]
 

@@ -8,7 +8,7 @@
     }
 </style>
 <form class="space-y-6"
-    hx-post="{% url 'send_mail' %}" 
+    hx-post="{% url 'contact_form_send_mail' %}" 
     hx-target="#contact_form"
     hx-indicator="#spinnerFilter">
     {% csrf_token %}

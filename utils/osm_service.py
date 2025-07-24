@@ -1,7 +1,5 @@
 import requests
 from Levenshtein import ratio
-from django.conf import settings
-from django.core.cache import cache
 from apps.general.models import CachedLocation
 
 class OSMService:

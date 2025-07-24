@@ -1,0 +1,4 @@
+{% load url_absolute %} 
+{% url_absolute "index" %}
+{% url_absolute "contact_page" %}
+{% url_absolute "calculator_page" %}
