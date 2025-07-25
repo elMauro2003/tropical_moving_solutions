@@ -1,9 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tropical Solutions-Contact Form</title>
+    <title>Tropical Moving Solutions - Contact Form</title>
+    <link rel="icon" type="image/jpg" href="{% static 'logo.jpg' %}">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/htmx.org@1.6.1"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -122,38 +124,8 @@
         
         <!-- Footer -->
         <div class="text-center mt-8 text-gray-600 text-sm">
-            <p>© 2025 MovingApp. All rights reserved. | Tropical Solutions Services</p>
+            <p>© 2025 MovingApp. All rights reserved. | Tropical Moving Solutions Services</p>
         </div>
     </div>
-    
-    {% comment %} <script>
-        // Set min date to today for the date picker
-        document.addEventListener('DOMContentLoaded', function() {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('date').setAttribute('min', today);
-            
-            // Form submission handler
-            const form = document.querySelector('form');
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Show success message
-                const button = form.querySelector('button');
-                const originalText = button.innerHTML;
-                
-                button.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Request Sent!';
-                button.classList.remove('from-blue-600', 'to-blue-700', 'hover:from-blue-700', 'hover:to-blue-800');
-                button.classList.add('bg-green-500', 'hover:bg-green-600');
-                
-                // Reset after 3 seconds
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.classList.add('from-blue-600', 'to-blue-700', 'hover:from-blue-700', 'hover:to-blue-800');
-                    button.classList.remove('bg-green-500', 'hover:bg-green-600');
-                    form.reset();
-                }, 3000);
-            });
-        });
-    </script> {% endcomment %}
 </body>
 </html>

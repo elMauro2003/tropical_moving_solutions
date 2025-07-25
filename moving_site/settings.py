@@ -87,24 +87,25 @@ WSGI_APPLICATION = 'moving_site.wsgi.application'
 
 
 ALTERNATIVE_DBS = {
-    # Para este proyecto por defecto uso MySQL
     "mysql": {
-        "ENGINE": os.getenv("ENGINE",default="django.db.backends.mysql"),
-        "NAME": os.getenv("DB_NAME", default="mysql"),
-        "USER": os.getenv("DB_USER", default="mysql"),
-        "PASSWORD": os.getenv("DB_PASSWORD", default="mysql"),
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": os.getenv("DB_NAME"),
+        "USER": os.getenv("DB_USER"),
+        "PASSWORD": os.getenv("DB_PASSWORD"),
         "HOST": os.getenv("DB_HOST", default="127.0.0.1"),
-        "PORT": os.getenv("DB_PORT", default=3306), # MySQL default port on pythonanywhere
+        "PORT": os.getenv("DB_PORT", "3306"),
+        "OPTIONS": {
+            "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     },
-    
-    'sqlite3': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "sqlite3": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
 DATABASES = {
-    "default": ALTERNATIVE_DBS[os.getenv("USERDB", default="sqlite3")],
+    "default": ALTERNATIVE_DBS[os.getenv("DB_TYPE", "sqlite3")],
 }
 
 

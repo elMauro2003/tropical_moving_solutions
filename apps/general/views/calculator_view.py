@@ -16,7 +16,7 @@ def check_quote_validation(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         
-        if distance['distance'] is None:
+        if distance['distance'] == None:
             context['tags'] = 'error'
             context['tag_message'] = distance["status"]
             context['form'] = form
@@ -128,15 +128,17 @@ def calculator_show_price_modal(request):
 
 def _calculate_distance(request):
     status = ''
-    
+    distance = None
     try:
         distance = service.calculate_distance(
             request.POST.get('origin'),
             request.POST.get('destination')
         )
     except Exception as e:
-        distance = None
         status = f"{e}"
+    
+    if distance == None:
+        status = 'Make sure you entered a valid origin and destination direction!'
     
     return {"distance": distance, "status": status}
 
