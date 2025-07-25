@@ -16,16 +16,16 @@ def check_quote_validation(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         
-        if distance is None:
+        if distance['distance'] is None:
             context['tags'] = 'error'
             context['tag_message'] = distance["status"]
             context['form'] = form
             return render(request, 'components/calculator/calculator_form.html', context)
         
-        if form.is_valid() and distance <= 55.00:
+        if form.is_valid() and distance['distance'] <= 55.00:
             context['tags'] = 'success'
             context['tag_message'] = 'Quote validated successfully!'
-        elif distance >= 55.00:
+        elif distance['distance'] >= 55.00:
             context['tags'] = 'error'
             context['tag_message'] = 'Distance can only be lower than 50 miles!'
         else:
@@ -128,6 +128,7 @@ def calculator_show_price_modal(request):
 
 def _calculate_distance(request):
     status = ''
+    
     try:
         distance = service.calculate_distance(
             request.POST.get('origin'),
@@ -136,8 +137,8 @@ def _calculate_distance(request):
     except Exception as e:
         distance = None
         status = f"{e}"
-
-    return {"distance": distance, "status": f"{e}"}
+    
+    return {"distance": distance, "status": status}
 
 def _show_pricing(request, size):
     context = {}

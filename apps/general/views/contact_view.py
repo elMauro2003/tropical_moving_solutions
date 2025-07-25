@@ -47,4 +47,4 @@ def contact_form_send_mail(request):
         context['form'] = form
     else:
         context['form'] = ''
-    return render(request, 'components/contact_form.html', context)
+    return render(request, 'components/contact/contact_form.html', context)

@@ -24,6 +24,11 @@ DEBUG = os.getenv('DEBUG', default=False)
 LIST_ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', default='*')
 ALLOWED_HOSTS = LIST_ALLOWED_HOSTS.split(",")
 
+
+# 🔥 Forzar HTTPS y redirección a www (configuración recomendada)
+SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT', default=False)  # Redirige HTTP → HTTPS
+PREPEND_WWW = os.getenv('PREPEND_WWW', default=False)          # Redirige dominio sin www → con www
+
 # Configuración de email
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', default='django.core.mail.backends.smtp.EmailBackend')
 EMAIL_HOST = os.getenv('EMAIL_HOST', default='smtp.gmail.com')
@@ -48,6 +53,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'apps.general.middleware.WWWRedirectMiddleware', # --> esto es para redirigir a www
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
