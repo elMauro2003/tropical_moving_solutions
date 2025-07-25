@@ -139,7 +139,7 @@ def _calculate_distance(request):
     
     if distance == None:
         status = 'Make sure you entered a valid origin and destination direction!'
-    
+    print(f"Distance{distance}")    
     return {"distance": distance, "status": status}
 
 def _show_pricing(request, size):
