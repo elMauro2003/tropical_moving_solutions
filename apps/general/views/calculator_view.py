@@ -10,30 +10,34 @@ service = OSMService()
 
 def check_quote_validation(request):
     context = {}
-    
-    distance = _calculate_distance(request)
-    
     if request.method == 'POST':
         form = ContactForm(request.POST)
-        
-        if distance['distance'] == None:
-            context['tags'] = 'error'
-            context['tag_message'] = distance["status"]
-            context['form'] = form
-            return render(request, 'components/calculator/calculator_form.html', context)
-        
-        if form.is_valid() and distance['distance'] <= 55.00:
-            context['tags'] = 'success'
-            context['tag_message'] = 'Quote validated successfully!'
-        elif distance['distance'] >= 55.00:
-            context['tags'] = 'error'
-            context['tag_message'] = 'Distance can only be lower than 50 miles!'
-        else:
-            context['tags'] = 'error'
-            context['tag_message'] = 'Something went wrong!'
-        
-    context['form'] = form
-    context['distance'] = distance
+        context['form'] = form
+        if form.is_valid():
+            origin = form.cleaned_data['origin']
+            destination = form.cleaned_data['destination']
+            
+            distance = service.calculate_distance(origin, destination)
+            #print(f"Distance: {distance}")
+            
+            if distance is None:
+                    context.update({
+                        'tags': 'error',
+                        'tag_message': 'Could not validate addresses'
+                    })
+            elif distance > 55:
+                context.update({
+                    'tags': 'error',
+                    'tag_message': 'Distance exceeds maximum allowed (55 miles)',
+                    'distance': distance
+                })
+            else:
+                context.update({
+                    'tags': 'success',
+                    'tag_message': 'Quote validated successfully!',
+                    'distance': distance
+                })
+    
     return render(request, 'components/calculator/calculator_form.html', context)
 
 def calculator_send_mail_quote(request):
@@ -125,22 +129,6 @@ def calculator_show_price_modal(request):
         context['tag_message'] = f'Error: {str(e)}'
         
     return render(request, 'components/calculator/price_modal.html', context)
-
-def _calculate_distance(request):
-    status = ''
-    distance = None
-    try:
-        distance = service.calculate_distance(
-            request.POST.get('origin'),
-            request.POST.get('destination')
-        )
-    except Exception as e:
-        status = f"{e}"
-    
-    if distance == None:
-        status = 'Make sure you entered a valid origin and destination direction!'
-    #print(f"Distance: {distance}")
-    return {"distance": distance, "status": status}
 
 def _show_pricing(request, size):
     context = {}
