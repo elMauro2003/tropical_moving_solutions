@@ -18,6 +18,12 @@
             margin-right: 8px;
             vertical-align: middle;
         }
+        
+        .line-through {
+    text-decoration: line-through;
+    opacity: 0.7;
+    text-decoration-thickness: 1.5px;
+}
     </style>
 </head>
 <body>
@@ -119,22 +125,23 @@
             const packingCheckbox = document.getElementById('packingCheckbox');
             const packingText = document.getElementById('packingText');
             
-            // Evento para White Glove
-            whiteGloveCheckbox.addEventListener('change', function() {
-                if (this.checked) {
-                    whiteGloveText.classList.remove('line-through');
-                } else {
-                    whiteGloveText.classList.add('line-through');
-                }
-            });
-            
-            // Evento para Packing
-            packingCheckbox.addEventListener('change', function() {
-                if (this.checked) {
-                    packingText.classList.remove('line-through');
-                } else {
-                    packingText.classList.add('line-through');
-                }
-            });
+           // Usa delegación de eventos en el documento
+    document.addEventListener('change', function(event) {
+        // White Glove
+        if (event.target.id === 'whiteGloveCheckbox') {
+            const whiteGloveText = document.getElementById('whiteGloveText');
+            if (whiteGloveText) {
+                whiteGloveText.classList.toggle('line-through', !event.target.checked);
+            }
+        }
+        
+        // Packing
+        if (event.target.id === 'packingCheckbox') {
+            const packingText = document.getElementById('packingText');
+            if (packingText) {
+                packingText.classList.toggle('line-through', !event.target.checked);
+            }
+        }
+    });
         });
     </script>
