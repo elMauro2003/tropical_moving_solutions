@@ -1,88 +1,140 @@
-<style>
-    #spinnerFilter2 {
-        display: none; /* Oculta el indicador por defecto */
-    }
-    
-    #spinnerFilter2.htmx-request {
-        display: block; /* Muestra el indicador durante la solicitud */
-    }
-</style>
-<form id="priceModalForm" 
-    hx-post="{% url 'calculator_send_mail_quote' %}" 
-    hx-target="#calculator_form"
-    hx-indicator="#spinnerFilter2"
-    hx-include="[name='size'], [name='name'], [name='location'], [name='origin'], [name='destination'], [name='phone'], [name='time'], [name='date'], [name='helpers'], [name='special_item']" >
-    {% csrf_token %}
-    <div class="modal-animation bg-white rounded-2xl card-shadow max-w-md w-full mx-4">
-        <div class="p-6">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-2xl font-bold text-gray-800">Your Moving Quote</h3>
-                <button type="button" id="closeModal" class="text-gray-500 hover:text-gray-700">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            
-            <div class="bg-gradient-to-r from-primary/10 to-secondary/10 p-4 rounded-lg mb-6 border border-primary/20">
-                <div class="flex justify-between items-center mb-3">
-                    <span class="text-gray-600">Base Price:</span>
-                    <span class="font-bold">${{base_price}}</span>
+ <style>
+        #spinnerFilter2 {
+            display: none; /* Oculta el indicador por defecto */
+        }
+        
+        #spinnerFilter2.htmx-request {
+            display: block; /* Muestra el indicador durante la solicitud */
+        }
+        
+        /* Estilo para tachado */
+        .line-through {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        
+        /* Estilo mínimo para checkbox */
+        .service-checkbox {
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <form id="priceModalForm" 
+        hx-post="{% url 'calculator_send_mail_quote' %}" 
+        hx-target="#calculator_form"
+        hx-indicator="#spinnerFilter2"
+        hx-include="[name='size'], [name='name'], [name='location'], [name='origin'], [name='destination'], [name='phone'], [name='time'], [name='date'], [name='helpers'], [name='special_item']" >
+        {% csrf_token %}
+        <div class="modal-animation bg-white rounded-2xl card-shadow max-w-md w-full mx-4">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-2xl font-bold text-gray-800">Your Moving Quote</h3>
+                    <button type="button" id="closeModal" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
-                <div class="flex justify-between items-center mb-3">
-                    <span class="text-gray-600">Truck Fee</span>
-                    <span class="font-bold">$200</span>
-                </div>
-                <div class="flex justify-between items-center mb-3">
-                    <span class="text-gray-600">White Glove</span>
-                    <span class="font-bold">${{white_glove}}</span>
-                </div>
-                <div class="flex justify-between items-center mb-3">
-                    <span class="text-gray-600">Packing</span>
-                    <span class="font-bold">${{packing}}</span>
-                </div>
-                <div class="flex justify-between items-center mb-3">
-                    <span class="text-gray-600">Accessibility</span>
-                    <span class="font-bold">$50</span>
-                </div>
-                <div class="flex justify-between items-center border-t border-gray-200 pt-3 mt-3">
-                    <span class="text-lg font-bold">Total:</span>
-                    <span class="text-2xl font-bold text-accent">${{total_amount}}</span>
-                </div>
-            </div>
-            
-            <p class="text-gray-600 mb-6 text-center text-sm">
-                <i class="fas fa-info-circle text-primary mr-1"></i> 
-                This is an estimate based on the information provided.
-            </p>
-            
-            <div class="space-y-3">
-                <button
-                    type="submit"
-                    id="scheduleBtn"
-                    class="w-full bg-gradient-to-r from-secondary to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 text-sm"
-                >
-                    <div id="spinnerFilter2" class="hidden">
-                        <i class="fas fa-spinner fa-spin text-white"></i>
+                
+                <div class="bg-gradient-to-r from-primary/10 to-secondary/10 p-4 rounded-lg mb-6 border border-primary/20">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-gray-600">Base Price:</span>
+                        <span class="font-bold">$1,200</span>
                     </div>
-                    <span id="buttonIcon2">
-                        <i class="fas fa-calendar-check mr-2"></i>
-                    </span>
-                    <span id="buttonText2" class="ml-2">Send Request</span>
-                </button>
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-gray-600">Truck Fee</span>
+                        <span class="font-bold">$200</span>
+                    </div>
+                    
+                    <!-- White Glove con checkbox y tachado -->
+                    <div class="flex justify-between items-center mb-3">
+                        <div>
+                            <input type="checkbox" id="whiteGloveCheckbox" class="service-checkbox">
+                            <span id="whiteGloveText" class="text-gray-600 line-through">White Glove</span>
+                        </div>
+                        <span class="font-bold">$350</span>
+                    </div>
+                    
+                    <!-- Packing con checkbox y tachado -->
+                    <div class="flex justify-between items-center mb-3">
+                        <div>
+                            <input type="checkbox" id="packingCheckbox" class="service-checkbox">
+                            <span id="packingText" class="text-gray-600 line-through">Packing</span>
+                        </div>
+                        <span class="font-bold">$250</span>
+                    </div>
+                    
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-gray-600">Accessibility</span>
+                        <span class="font-bold">$50</span>
+                    </div>
+                    <div class="flex justify-between items-center border-t border-gray-200 pt-3 mt-3">
+                        <span class="text-lg font-bold">Total:</span>
+                        <span class="text-2xl font-bold text-accent">$1,650</span>
+                    </div>
+                </div>
+                
+                <p class="text-gray-600 mb-6 text-center text-sm">
+                    <i class="fas fa-info-circle text-primary mr-1"></i> 
+                    This is an estimate based on the information provided.
+                </p>
+                
+                <div class="space-y-3">
+                    <button
+                        type="submit"
+                        id="scheduleBtn"
+                        class="w-full bg-gradient-to-r from-secondary to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 text-sm"
+                    >
+                        <div id="spinnerFilter2" class="hidden">
+                            <i class="fas fa-spinner fa-spin text-white"></i>
+                        </div>
+                        <span id="buttonIcon2">
+                            <i class="fas fa-calendar-check mr-2"></i>
+                        </span>
+                        <span id="buttonText2" class="ml-2">Send Request</span>
+                    </button>
 
-                <button id="callBtn" class="w-full bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 text-sm">
-                    <i class="fas fa-phone mr-2"></i>Call to Confirm Details
-                </button>
+                    <button id="callBtn" class="w-full bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 text-sm">
+                        <i class="fas fa-phone mr-2"></i>Call to Confirm Details
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
+    </form>
 
-</form>
-
-<script>
-    document.addEventListener('htmx:afterRequest', function (event) {
-        const form = event.target.closest('form');
-        if (form && form.id === 'priceModalForm') {
-            document.getElementById('priceModal').classList.add('hidden');
-        }
-    });    
-</script>
+    <script>
+        document.addEventListener('htmx:afterRequest', function (event) {
+            const form = event.target.closest('form');
+            if (form && form.id === 'priceModalForm') {
+                document.getElementById('priceModal').classList.add('hidden');
+            }
+        });    
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos para White Glove
+            const whiteGloveCheckbox = document.getElementById('whiteGloveCheckbox');
+            const whiteGloveText = document.getElementById('whiteGloveText');
+            
+            // Elementos para Packing
+            const packingCheckbox = document.getElementById('packingCheckbox');
+            const packingText = document.getElementById('packingText');
+            
+            // Evento para White Glove
+            whiteGloveCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    whiteGloveText.classList.remove('line-through');
+                } else {
+                    whiteGloveText.classList.add('line-through');
+                }
+            });
+            
+            // Evento para Packing
+            packingCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    packingText.classList.remove('line-through');
+                } else {
+                    packingText.classList.add('line-through');
+                }
+            });
+        });
+    </script>
