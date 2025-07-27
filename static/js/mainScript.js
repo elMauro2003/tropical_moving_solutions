@@ -199,3 +199,4 @@ showSection('tropical');
     // Initialize the slider
     initSlider();
 });
+  
