@@ -13,13 +13,12 @@ def check_quote_validation(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         context['form'] = form
+        context['plan_type'] = request.POST.get('plan_type', None)
         if form.is_valid():
             origin = form.cleaned_data['origin']
             destination = form.cleaned_data['destination']
-            
             distance = service.calculate_distance(origin, destination)
-            #print(f"Distance: {distance}")
-            
+            context['distance'] = distance
             if distance is None:
                     context.update({
                         'tags': 'error',
@@ -37,12 +36,11 @@ def check_quote_validation(request):
                     'tag_message': 'Quote validated successfully!',
                     'distance': distance
                 })
-    
+                
     return render(request, 'components/calculator/calculator_form.html', context)
 
 def calculator_send_mail_quote(request):
-    context = {}
-    
+    context = {}    
     if request.method == 'POST':
         try:
             # Procesar datos
@@ -56,8 +54,9 @@ def calculator_send_mail_quote(request):
             helpers = request.POST.get('helpers')
             special_item = request.POST.get('special_item')
             size = request.POST.get('size')
-            distance = request.POST.get('distance')  
-                
+            distance = request.POST.get('distance')
+            plan_type= request.POST.get('plan_type', None)
+            print(f"Distance: {distance}")
             # Crear contenido del email (HTML)
             context = {
                 'name': name,
@@ -71,6 +70,7 @@ def calculator_send_mail_quote(request):
                 'special_item': special_item,
                 'size': size,
                 'distance': distance,
+                'plan_type': plan_type,
                 'total_amount': _show_pricing(request, size).get('total_amount', 0),
                 'white_glove': _show_pricing(request, size).get('white_glove', 0),
                 'packing': _show_pricing(request, size).get('packing', 0),
@@ -109,7 +109,8 @@ def calculator_show_price_modal(request):
         helpers = request.GET.get('helpers')
         special_item = request.GET.get('special_item')
         size = request.GET.get('size')
-        distance = request.POST.get('distance')
+        distance = request.GET.get('distance')
+        plan_type= request.GET.get('plan_type', None)
         
         # Pasar al contexto
         context = _show_pricing(request, size)
@@ -124,6 +125,7 @@ def calculator_show_price_modal(request):
         context['special_item'] = special_item
         context['size'] = size
         context['distance'] = distance
+        context['plan_type'] = plan_type
     except Exception as e:
         context['tags'] = 'error'
         context['tag_message'] = f'Error: {str(e)}'

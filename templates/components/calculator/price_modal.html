@@ -31,8 +31,12 @@
         hx-post="{% url 'calculator_send_mail_quote' %}" 
         hx-target="#calculator_form"
         hx-indicator="#spinnerFilter2"
-        hx-include="[name='size'], [name='name'], [name='location'], [name='origin'], [name='destination'], [name='phone'], [name='time'], [name='date'], [name='helpers'], [name='special_item']" >
+        hx-include="[name='size'], [name='name'], [name='location'], [name='origin'], [name='destination'], [name='phone'], [name='time'], [name='date'], [name='helpers'], [name='special_item'], [name='plan_type']" 
+        hx-vals='{"distance": "{{ distance }}"}'
+        >
+
         {% csrf_token %}
+        <input type="hidden" name="plan_type" value="{{ plan_type }}">
         <div class="modal-animation bg-white rounded-2xl card-shadow max-w-md w-full mx-4">
             <div class="p-6">
                 <div class="flex justify-between items-center mb-4">
@@ -83,6 +87,8 @@
                 <p class="text-gray-600 mb-6 text-center text-sm">
                     <i class="fas fa-info-circle text-primary mr-1"></i> 
                     This is an estimate based on the information provided.
+                    <br>
+                    Distance: {{distance}}
                 </p>
                 
                 <div class="space-y-3">

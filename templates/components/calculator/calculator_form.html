@@ -10,7 +10,8 @@
 <form id="movingCalculator" class="space-y-4" 
     hx-post="{% url 'check_quote_validation' %}" 
     hx-target="#calculator_form"
-    hx-indicator="#spinnerFilter">
+    hx-indicator="#spinnerFilter"
+    >
     {% csrf_token %}
         <!-- Name Input -->
         <div>
@@ -47,6 +48,7 @@
                 <div class="text-red-600">{{ form.location.errors.0 }}</div>
             {% endif %}
         </div>
+        
 
         <!-- Origin and Destination -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -139,7 +141,7 @@
                 {% endif %}
             </div>
         </div>
-
+        
         <!-- Special Items -->
         <div>
             <label for="specialItem" class="block text-base font-medium text-gray-700 mb-1">
@@ -279,7 +281,7 @@
         {% endif %}
 
         {% if tag_message  == "Quote validated successfully!" %}
-            
+
             <script>
                 // Solo mostrar el modal, no inicializar eventos aquí
                 document.getElementById('priceModal').classList.remove('hidden');
@@ -289,7 +291,8 @@
             hx-get="{% url 'calculator_show_price_modal' %}"
             hx-target="#priceModal"
             hx-trigger="load"
-            hx-include="[name='size'], [name='name'], [name='location'], [name='origin'], [name='destination'], [name='phone'], [name='time'], [name='date'], [name='helpers'], [name='special_item'], [distance='distance']"
+            hx-include="[name='size'], [name='name'], [name='location'], [name='origin'], [name='destination'], [name='phone'], [name='time'], [name='date'], [name='helpers'], [name='special_item'], [name='plan_type']"
+            hx-vals='{"distance": "{{ distance }}"}'
             >
             </div>
 

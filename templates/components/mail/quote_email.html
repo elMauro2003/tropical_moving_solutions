@@ -164,6 +164,12 @@
                         <span class="detail-label">Phone Number</span>
                         <div class="detail-value">{{phone}}</div>
                     </div>
+                    {% if plan_type %}
+                        <div class="detail-item">
+                            <span class="detail-label">Plan Type</span>
+                            <div class="detail-value">{{plan_type}}</div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
             

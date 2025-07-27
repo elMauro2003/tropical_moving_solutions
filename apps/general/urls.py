@@ -7,6 +7,7 @@ from apps.general.views.calculator_view import check_quote_validation, calculato
 urlpatterns = [
     path('', index, name='index'),
     path('calculator/', calculator_page, name='calculator_page'),
+    path('calculator-plan-type/<str:plan_type>/', calculator_page, name='calculator_page_with_param'),
     path('contact/', contact_page, name='contact_page'),
     path('check-quote-validation/', check_quote_validation, name='check_quote_validation'),
     path('calculator-show-price-modal/', calculator_show_price_modal, name='calculator_show_price_modal'),

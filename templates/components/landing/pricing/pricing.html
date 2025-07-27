@@ -60,7 +60,7 @@
                         <li><span class="feature-icon not-included"><i class="fas fa-times"></i></span>Packing materials</li>
                         <li><span class="feature-icon not-included"><i class="fas fa-times"></i></span>Disassembly/reassembly</li>
                     </ul>
-                    <a href="{% url 'calculator_page' %}" class="mt-5 w-full px-4 py-3 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition duration-200 flex items-center justify-center"
+                    <a href="{% url 'calculator_page_with_param' plan_type='basic_moving' %}" class="mt-5 w-full px-4 py-3 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 transition duration-200 flex items-center justify-center"
                             data-plan="basic" data-price="70">
                         <i class="fas fa-calendar-check mr-2"></i> Book Now
                     </a>
@@ -86,7 +86,7 @@
                         <li><span class="feature-icon included"><i class="fas fa-check"></i></span>Packing materials</li>
                         <li><span class="feature-icon not-included"><i class="fas fa-times"></i></span>Disassembly/reassembly</li>
                     </ul>
-                    <a href="{% url 'calculator_page' %}" class="mt-5 w-full px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold rounded-lg hover:from-orange-600 hover:to-orange-700 transition duration-200 flex items-center justify-center"
+                    <a href="{% url 'calculator_page_with_param' plan_type='standard_moving' %}" class="mt-5 w-full px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold rounded-lg hover:from-orange-600 hover:to-orange-700 transition duration-200 flex items-center justify-center"
                             data-plan="standard" data-price="107">
                         <i class="fas fa-star mr-2"></i> Book Now
                     </a >
@@ -109,7 +109,7 @@
                         <li><span class="feature-icon included"><i class="fas fa-check"></i></span>Packing materials</li>
                         <li><span class="feature-icon included"><i class="fas fa-check"></i></span>Disassembly/reassembly</li>
                     </ul>
-                    <a href="{% url 'calculator_page' %}" class="mt-5 w-full px-4 py-3 bg-blue-700 text-white font-medium rounded-lg hover:bg-blue-800 transition duration-200 flex items-center justify-center"
+                    <a href="{% url 'calculator_page_with_param' plan_type='premium_moving' %}" class="mt-5 w-full px-4 py-3 bg-blue-700 text-white font-medium rounded-lg hover:bg-blue-800 transition duration-200 flex items-center justify-center"
                             data-plan="premium" data-price="145">
                         
                         <i class="fas fa-crown mr-2"></i> Book Now
