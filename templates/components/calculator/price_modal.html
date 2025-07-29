@@ -31,7 +31,7 @@
         hx-post="{% url 'calculator_send_mail_quote' %}" 
         hx-target="#calculator_form"
         hx-indicator="#spinnerFilter2"
-        hx-include="[name='size'], [name='name'], [name='location'], [name='origin'], [name='destination'], [name='phone'], [name='time'], [name='date'], [name='helpers'], [name='special_item'], [name='plan_type']" 
+        hx-include="[name='size'], [name='name'], [name='location'], [name='origin'], [name='destination'], [name='phone'], [name='time'], [name='date'], [name='helpers'], [name='special_item'], [name='plan_type'], [name='white_glove_service'], [name='packing_service']" 
         hx-vals='{"distance": "{{ distance }}"}'
         >
 
@@ -49,17 +49,22 @@
                 <div class="bg-gradient-to-r from-primary/10 to-secondary/10 p-4 rounded-lg mb-6 border border-primary/20">
                     <div class="flex justify-between items-center mb-3">
                         <span class="text-gray-600">Base Price:</span>
-                        <span class="font-bold">$1,200</span>
+                        <span class="font-bold">${{base_price}}</span>
                     </div>
                     <div class="flex justify-between items-center mb-3">
                         <span class="text-gray-600">Truck Fee</span>
                         <span class="font-bold">$200</span>
                     </div>
                     
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-gray-600">Accessibility</span>
+                        <span class="font-bold">$50</span>
+                    </div>
+
                     <!-- White Glove con checkbox y tachado -->
                     <div class="flex justify-between items-center mb-3">
                         <div>
-                            <input type="checkbox" id="whiteGloveCheckbox" class="service-checkbox">
+                            <input type="checkbox" name="white_glove_service" id="whiteGloveCheckbox" class="service-checkbox">
                             <span id="whiteGloveText" class="text-gray-600 line-through">White Glove</span>
                         </div>
                         <span class="font-bold">$350</span>
@@ -69,26 +74,20 @@
                     <div class="flex justify-between items-center mb-3">
                         <div>
                             <input type="checkbox" id="packingCheckbox" class="service-checkbox">
-                            <span id="packingText" class="text-gray-600 line-through">Packing</span>
+                            <span id="packingText" name="packing_service" class="text-gray-600 line-through">Packing</span>
                         </div>
                         <span class="font-bold">$250</span>
                     </div>
-                    
-                    <div class="flex justify-between items-center mb-3">
-                        <span class="text-gray-600">Accessibility</span>
-                        <span class="font-bold">$50</span>
-                    </div>
+
                     <div class="flex justify-between items-center border-t border-gray-200 pt-3 mt-3">
                         <span class="text-lg font-bold">Total:</span>
-                        <span class="text-2xl font-bold text-accent">$1,650</span>
+                        <span class="text-2xl font-bold text-accent">${{total_amount}}</span>
                     </div>
                 </div>
                 
                 <p class="text-gray-600 mb-6 text-center text-sm">
                     <i class="fas fa-info-circle text-primary mr-1"></i> 
                     This is an estimate based on the information provided.
-                    <br>
-                    Distance: {{distance}}
                 </p>
                 
                 <div class="space-y-3">
@@ -106,7 +105,7 @@
                         <span id="buttonText2" class="ml-2">Send Request</span>
                     </button>
 
-                    <button id="callBtn" class="w-full bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 text-sm">
+                    <button type="button" id="callBtn" class="w-full bg-gradient-to-r from-primary to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 text-sm">
                         <i class="fas fa-phone mr-2"></i>Call to Confirm Details
                     </button>
                 </div>

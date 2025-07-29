@@ -56,7 +56,18 @@ def calculator_send_mail_quote(request):
             size = request.POST.get('size')
             distance = request.POST.get('distance')
             plan_type= request.POST.get('plan_type', None)
-            print(f"Distance: {distance}")
+            
+            
+            white_glove_service = request.POST.get('white_glove_service')
+            packing_service = request.POST.get('packing_service')
+            pricing = _show_pricing(request, size)
+            total_amount = float(pricing.get('base_price', 0)) + 200 + 50
+            
+            if white_glove_service:
+                total_amount += float(pricing.get('white_glove', 0))
+            if packing_service:
+                total_amount += float(pricing.get('packing', 0))
+            
             # Crear contenido del email (HTML)
             context = {
                 'name': name,
@@ -71,9 +82,9 @@ def calculator_send_mail_quote(request):
                 'size': size,
                 'distance': distance,
                 'plan_type': plan_type,
-                'total_amount': _show_pricing(request, size).get('total_amount', 0),
-                'white_glove': _show_pricing(request, size).get('white_glove', 0),
-                'packing': _show_pricing(request, size).get('packing', 0),
+                'total_amount': total_amount,
+                'white_glove': pricing.get('white_glove', 0) if white_glove_service else 0,
+                'packing': pricing.get('packing', 0) if packing_service else 0,
                 
             }
             content = render_to_string('components/mail/quote_email.html', context)
@@ -126,6 +137,7 @@ def calculator_show_price_modal(request):
         context['size'] = size
         context['distance'] = distance
         context['plan_type'] = plan_type
+        context['total_amount'] = float(context.get('base_price', 0)) + 200 + 50
     except Exception as e:
         context['tags'] = 'error'
         context['tag_message'] = f'Error: {str(e)}'
@@ -155,5 +167,7 @@ def _show_pricing(request, size):
         context['packing'] = '750'
         context['white_glove'] = '1300'
     
-    context['total_amount'] = float(context.get('base_price', 0)) + float(context.get('packing', 0)) + float(context.get('white_glove', 0)) + float(250)
+    
+    #context['total_amount'] = float(context.get('base_price', 0)) + float(context.get('packing', 0)) + float(context.get('white_glove', 0)) + float(250)
+    
     return context
