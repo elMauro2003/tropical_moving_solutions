@@ -60,28 +60,8 @@
                         <span class="text-gray-600">Accessibility</span>
                         <span class="font-bold">$50</span>
                     </div>
-
-                    <!-- White Glove con checkbox y tachado -->
-                    <div class="flex justify-between items-center mb-3">
-                        <div>
-                            <input type="checkbox" name="white_glove_service" id="whiteGloveCheckbox" class="service-checkbox">
-                            <span id="whiteGloveText" class="text-gray-600 line-through">White Glove</span>
-                        </div>
-                        <span class="font-bold">$350</span>
-                    </div>
-                    
-                    <!-- Packing con checkbox y tachado -->
-                    <div class="flex justify-between items-center mb-3">
-                        <div>
-                            <input type="checkbox" id="packingCheckbox" class="service-checkbox">
-                            <span id="packingText" name="packing_service" class="text-gray-600 line-through">Packing</span>
-                        </div>
-                        <span class="font-bold">$250</span>
-                    </div>
-
-                    <div class="flex justify-between items-center border-t border-gray-200 pt-3 mt-3">
-                        <span class="text-lg font-bold">Total:</span>
-                        <span class="text-2xl font-bold text-accent">${{total_amount}}</span>
+                    <div id="price-container">
+                        {% include "components/calculator/price_container.html" %}
                     </div>
                 </div>
                 
@@ -117,36 +97,12 @@
         document.addEventListener('htmx:afterRequest', function (event) {
             const form = event.target.closest('form');
             if (form && form.id === 'priceModalForm') {
-                document.getElementById('priceModal').classList.add('hidden');
+                // Verificar si el elemento que disparó la solicitud tiene el atributo data-htmx-ignore-close
+                const triggeringElement = event.detail.requestConfig.elt;
+                console.log('La resinga de tuy madre: ' + triggeringElement)
+                if (!triggeringElement || !triggeringElement.hasAttribute('data-htmx-ignore-close')) {
+                    document.getElementById('priceModal').classList.add('hidden');
+                }
             }
-        });    
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            // Elementos para White Glove
-            const whiteGloveCheckbox = document.getElementById('whiteGloveCheckbox');
-            const whiteGloveText = document.getElementById('whiteGloveText');
-            
-            // Elementos para Packing
-            const packingCheckbox = document.getElementById('packingCheckbox');
-            const packingText = document.getElementById('packingText');
-            
-           // Usa delegación de eventos en el documento
-    document.addEventListener('change', function(event) {
-        // White Glove
-        if (event.target.id === 'whiteGloveCheckbox') {
-            const whiteGloveText = document.getElementById('whiteGloveText');
-            if (whiteGloveText) {
-                whiteGloveText.classList.toggle('line-through', !event.target.checked);
-            }
-        }
-        
-        // Packing
-        if (event.target.id === 'packingCheckbox') {
-            const packingText = document.getElementById('packingText');
-            if (packingText) {
-                packingText.classList.toggle('line-through', !event.target.checked);
-            }
-        }
-    });
         });
     </script>

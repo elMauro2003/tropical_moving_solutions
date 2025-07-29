@@ -1,7 +1,7 @@
 from django.urls import path, include
 from apps.general.views.home import index, calculator_page, contact_page
 from apps.general.views.contact_view import contact_form_send_mail
-from apps.general.views.calculator_view import check_quote_validation, calculator_send_mail_quote, calculator_show_price_modal
+from apps.general.views.calculator_view import check_quote_validation, calculator_send_mail_quote, calculator_show_price_modal, update_calculator_total_price
 
 
 urlpatterns = [
@@ -13,4 +13,5 @@ urlpatterns = [
     path('calculator-show-price-modal/', calculator_show_price_modal, name='calculator_show_price_modal'),
     path('contact-form-send-mail/', contact_form_send_mail, name='contact_form_send_mail'),
     path('calculator-send-mail-quote/', calculator_send_mail_quote, name='calculator_send_mail_quote'),
+    path('calculator-update-total-amount/', update_calculator_total_price, name='update_calculator_total_price')
 ]

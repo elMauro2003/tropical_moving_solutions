@@ -1,0 +1,42 @@
+<!-- White Glove con checkbox y tachado -->
+<div class="flex justify-between items-center mb-3">
+    <div>
+        <input
+        hx-get="{% url 'update_calculator_total_price' %}"
+        hx-target="#price-container"
+        hx-trigger="change"
+        type="checkbox"
+        name="white_glove_service"
+        id="whiteGloveCheckbox"
+        class="service-checkbox"
+        data-htmx-ignore-close="true"
+        {% if white_glove_service_checked %}checked{% endif %}>
+        <span id="whiteGloveText" class="text-gray-600">White Glove</span>
+    </div>
+    <span class="font-bold">${{white_glove}}</span>
+</div>
+
+<!-- Packing con checkbox y tachado -->
+<div class="flex justify-between items-center mb-3">
+    <div>
+        
+        <input
+            hx-get="{% url 'update_calculator_total_price' %}"
+            hx-target="#price-container"
+            hx-trigger="change"
+            type="checkbox"
+            id="packingCheckbox"
+            class="service-checkbox"
+            name="packing_service"
+            data-htmx-ignore-close="true"
+            {% if packing_service_checked %}checked{% endif %}
+            >
+        <span class="text-gray-600">Packing</span>
+    </div>
+    <span id="packingText" class="font-bold">${{packing}}</span>
+</div>
+
+<div class="flex justify-between items-center border-t border-gray-200 pt-3 mt-3">
+    <span class="text-lg font-bold">Total:</span>
+    <span class="text-2xl font-bold text-accent">${{total_amount}}</span>
+</div>

@@ -122,6 +122,8 @@ def calculator_show_price_modal(request):
         size = request.GET.get('size')
         distance = request.GET.get('distance')
         plan_type= request.GET.get('plan_type', None)
+        white_glove_service = request.POST.get('white_glove_service')
+        packing_service = request.POST.get('packing_service')
         
         # Pasar al contexto
         context = _show_pricing(request, size)
@@ -137,12 +139,37 @@ def calculator_show_price_modal(request):
         context['size'] = size
         context['distance'] = distance
         context['plan_type'] = plan_type
+        context['white_glove'] = context.get('white_glove', 0) if white_glove_service else 0
+        context['packing'] = context.get('packing', 0) if packing_service else 0
         context['total_amount'] = float(context.get('base_price', 0)) + 200 + 50
     except Exception as e:
         context['tags'] = 'error'
         context['tag_message'] = f'Error: {str(e)}'
         
     return render(request, 'components/calculator/price_modal.html', context)
+
+
+def update_calculator_total_price(request):
+    context = {}
+    if request.method == 'GET':
+        size = request.GET.get('size')
+        white_glove_service = request.GET.get('white_glove_service')
+        packing_service = request.GET.get('packing_service')
+        pricing = _show_pricing(request, size)
+        total_amount = float(pricing.get('base_price', 0)) + 200 + 50
+        
+        if white_glove_service:
+            total_amount += float(pricing.get('white_glove', 0))
+        if packing_service:
+            total_amount += float(pricing.get('packing', 0))
+        context['total_amount'] = total_amount
+        context['base_price'] = pricing.get('base_price', 0)
+        context['white_glove'] = pricing.get('white_glove', 0) if white_glove_service else 0
+        context['packing'] = pricing.get('packing', 0) if packing_service else 0
+        context['white_glove_service_checked'] = white_glove_service
+        context['packing_service_checked'] = packing_service
+    
+    return render(request, 'components/calculator/price_container.html', context)
 
 def _show_pricing(request, size):
     context = {}
