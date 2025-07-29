@@ -21,11 +21,11 @@ document.addEventListener('DOMContentLoaded', function() {
 });
     // Imágenes
 const images = [
-'https://images.unsplash.com/photo-1515238152791-8216bfdf89a7?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-' https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-'https://images.unsplash.com/photo-1593032232062-3367ef9cd0e0?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-'https://images.unsplash.com/photo-1586781383963-8e66f88077ec?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-'https://images.unsplash.com/photo-1512100356356-de1b84283e18?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2075&q=80'
+'static/1.jpg',
+'static/2.jpg',
+'static/3.jpg',
+'static/4.jpg',
+'static/5.jpg'
 ];
 
 // Obtener elementos del DOM
