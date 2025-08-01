@@ -44,14 +44,7 @@
     background-color: #0d9488;
 }
 
-/* Estilo para el degradado en KEYS y COAST */
-.gradient-text {
-    background: linear-gradient(to bottom, currentColor 100%,transparent);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: inline-block;
-}
+
 
 /* Estilos del carrusel */
 .carousel-item {
@@ -245,3 +238,4 @@
                 display: block;
             }
         }
+        

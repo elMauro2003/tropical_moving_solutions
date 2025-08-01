@@ -12,31 +12,36 @@
     <!-- Tarjeta manteniendo tu diseño original -->
     <div id="card" class="rounded-xl p-6 md:p-10 max-w-4xl w-full">
         <!-- Heading con efectos de gradiente en KEYS y COAST -->
-        <h1 class="text-white text-4xl md:text-5xl mb-3 font-bold">
-        From the <br>
-        <b class="text-green-400 text-6xl md:text-8xl animate-float animation">KEYS</b><br>
+        <h1 class="text-white text-4xl md:text-5xl mb-3 font-bold" >
+         From the <br>
+        <b class="text-green-400 text-5xl md:text-7xl">KEYS</b><br> 
         to the<br>
-        <b class="text-blue-600 text-6xl md:text-8xl animate-float animation" style="animation-delay: 0.5s">COAST</b> <br>
-        we keep you moving
-        </h1> 
+        <b class="text-blue-600 text-5xl md:text-7xl">COAST</b> <br> 
+  we keep you moving
+</h1>
         <h2 class="text-xl md:text-2xl font-bold mb-8 text-white mt-4">
         Your <b class="text-green-400">Stress-Free</b> Move Starts Here
         </h2>
         
         <!-- Campo de presupuesto -->
-        <section class="w-full flex justify-center">
-            <div class="flex items-center space-x-2 bg-white border border-gray-300 rounded-full px-4 sm:px-6 py-3 transition-all duration-300 focus-within:ring-2 focus-within:ring-blue-400 shadow-lg w-full max-w-xs sm:w-72 sm:focus-within:w-80">
-                <input 
-                type="text" 
-                placeholder="Initial quote" 
-                class="flex-grow bg-transparent outline-none text-gray-700 placeholder-gray-400 transition-all duration-300 text-base sm:text-lg"
-                disabled
-                />
-                <button class="text-green-400 text-2xl sm:text-3xl hover:bg-blue-500 hover:text-white transition px-2 py-1 rounded-full focus:bg-gray-400 focus:text-white flex items-center justify-center">
-                <a href="{% url 'calculator_page' %}" class="flex items-center justify-center text-center"><i class='bx bx-arrow-right-circle'></i></a>
-                </button>
-            </div>
-        </section>
+      <section class="w-full flex justify-center">
+    <div class="flex items-center space-x-2 bg-white border border-gray-300 rounded-full px-4 sm:px-6 py-3 transition-all duration-300 focus-within:ring-2 focus-within:ring-blue-400 shadow-lg w-full max-w-xs sm:w-72 sm:focus-within:w-80">
+        <input 
+            type="text" 
+            placeholder="Initial quote" 
+            class="flex-grow bg-transparent outline-none text-gray-700 placeholder-gray-400 transition-all duration-300 text-base sm:text-lg"
+            disabled
+            aria-label="Initial quote input"
+        />
+        <a 
+            href="{% url 'calculator_page' %}" 
+            class="text-green-400 hover:bg-blue-500 hover:text-white transition-all rounded-full focus:bg-gray-400 focus:text-white flex items-center justify-center w-12 h-12 min-w-[3rem] min-h-[3rem]"
+            aria-label="Go to calculator"
+        >
+            <i class='bx bx-arrow-right-circle text-2xl sm:text-3xl'></i>
+        </a>
+    </div>
+</section>
     </div>
     </div>
     <!-- Flecha para scroll hacia abajo -->

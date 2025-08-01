@@ -1,3 +1,4 @@
+console.log("sexo")
 document.addEventListener('DOMContentLoaded', function() {
     // Seleccionar todos los enlaces de navegación
     const navLinks = document.querySelectorAll('.nav-link');
