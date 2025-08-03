@@ -1,4 +1,3 @@
-console.log("sexo")
 document.addEventListener('DOMContentLoaded', function() {
     // Seleccionar todos los enlaces de navegación
     const navLinks = document.querySelectorAll('.nav-link');
@@ -74,7 +73,7 @@ card.classList.add('animate-fadeIn');
 
 // Función para el scroll hacia abajo
 document.getElementById('scroll-down').addEventListener('click', () => {
-const nextSection = document.getElementById('sobre-nosotros');
+const nextSection = document.getElementById('about-us');
 if (nextSection) {
     nextSection.scrollIntoView({ behavior: 'smooth' });
 }
@@ -83,7 +82,7 @@ if (nextSection) {
 // Agregar efecto de teclado para scroll
 document.addEventListener('keydown', (e) => {
 if (e.key === 'ArrowDown') {
-    const nextSection = document.getElementById('sobre-nosotros');
+    const nextSection = document.getElementById('about-us');
     if (nextSection) {
     nextSection.scrollIntoView({ behavior: 'smooth' });
     }
