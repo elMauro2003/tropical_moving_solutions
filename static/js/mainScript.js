@@ -22,11 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
 });
     // Imágenes
 const images = [
-'static/1.jpg',
-'static/2.jpg',
-'static/3.jpg',
-'static/4.jpg',
-'static/5.jpg'
+'static/1.webp',
+'static/2.webp',
+'static/3.webp',
+'static/4.webp',
+'static/5.webp'
 ];
 
 // Obtener elementos del DOM

@@ -239,3 +239,23 @@
             }
         }
         
+        a{
+            box-shadow: none;
+            outline: none;
+        }
+        i{
+            box-shadow: none !important;
+            outline: none !important;
+        }
+        #arrow{
+             box-shadow: none !important;
+            outline: none !important;
+        }
+        .bx-no-shadow {
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
+  .bxr{
+    text-shadow: none !important;
+    box-shadow: none !important;
+}
